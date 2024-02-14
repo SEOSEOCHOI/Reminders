@@ -7,14 +7,17 @@
 
 import UIKit
 
-class AddImageView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+class AddImageView: BaseView {
+    override func configureHierarchy() {
+        
     }
-    */
+    
+    override func configureLayout() {
+        
+    }
+    
+    override func configureView() {
+        super.configureView()
+    }
 
 }

@@ -1,26 +1,31 @@
 //
-//  BaseView.swift
+//  BaseCollectionViewCell.swift
 //  Reminders
 //
-//  Created by 최서경 on 2/14/24.
+//  Created by 최서경 on 2/15/24.
 //
 
 import UIKit
 
-class BaseView: UIView {
+class BaseCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureHierarchy()
-        configureLayout()
+        configureConstraints()
         configureView()
     }
-    func configureHierarchy() {  }
-    func configureLayout() { }
+    
+    func configureHierarchy() {
+    }
+    
+    func configureConstraints() {
+    }
+    
     func configureView() {
-        backgroundColor = .black
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }

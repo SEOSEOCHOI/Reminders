@@ -22,6 +22,21 @@
 		2BF74A7C2B7CB21B00B26149 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A7B2B7CB21B00B26149 /* AddView.swift */; };
 		2BF74A812B7CB27100B26149 /* AddImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A802B7CB27100B26149 /* AddImageView.swift */; };
 		2BF74A842B7CB29300B26149 /* AddImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A832B7CB29300B26149 /* AddImageViewController.swift */; };
+		2BF74A872B7CC11800B26149 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2BF74A862B7CC11800B26149 /* SnapKit */; };
+		2BF74A8A2B7CCC9D00B26149 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A892B7CCC9D00B26149 /* Protocol.swift */; };
+		2BF74A8D2B7CCCDC00B26149 /* Reuseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A8C2B7CCCDC00B26149 /* Reuseable.swift */; };
+		2BF74A8F2B7CCD0400B26149 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A8E2B7CCD0400B26149 /* AddTableViewCell.swift */; };
+		2BF74A912B7CCD2800B26149 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A902B7CCD2800B26149 /* BaseTableViewCell.swift */; };
+		2BF74A932B7CE51800B26149 /* AddTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A922B7CE51800B26149 /* AddTextFieldTableViewCell.swift */; };
+		2BF74A952B7CEBE000B26149 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A942B7CEBE000B26149 /* UIViewController + Extension.swift */; };
+		2BF74A992B7CEC3D00B26149 /* DateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A982B7CEC3D00B26149 /* DateViewController.swift */; };
+		2BF74A9B2B7CEC4900B26149 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A9A2B7CEC4900B26149 /* DateView.swift */; };
+		2BF74A9D2B7CEE7E00B26149 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A9C2B7CEE7E00B26149 /* TagView.swift */; };
+		2BF74A9F2B7CEE8800B26149 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74A9E2B7CEE8800B26149 /* TagViewController.swift */; };
+		2BF74AA12B7CEE9200B26149 /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74AA02B7CEE9200B26149 /* PriorityViewController.swift */; };
+		2BF74AA32B7CEEA400B26149 /* PriorityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74AA22B7CEEA400B26149 /* PriorityView.swift */; };
+		2BF74AA82B7D37E400B26149 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74AA72B7D37E400B26149 /* MainCollectionViewCell.swift */; };
+		2BF74AAA2B7D37EE00B26149 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF74AA92B7D37EE00B26149 /* BaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +57,20 @@
 		2BF74A7B2B7CB21B00B26149 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		2BF74A802B7CB27100B26149 /* AddImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageView.swift; sourceTree = "<group>"; };
 		2BF74A832B7CB29300B26149 /* AddImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageViewController.swift; sourceTree = "<group>"; };
+		2BF74A892B7CCC9D00B26149 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		2BF74A8C2B7CCCDC00B26149 /* Reuseable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reuseable.swift; sourceTree = "<group>"; };
+		2BF74A8E2B7CCD0400B26149 /* AddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
+		2BF74A902B7CCD2800B26149 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		2BF74A922B7CE51800B26149 /* AddTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		2BF74A942B7CEBE000B26149 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		2BF74A982B7CEC3D00B26149 /* DateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewController.swift; sourceTree = "<group>"; };
+		2BF74A9A2B7CEC4900B26149 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
+		2BF74A9C2B7CEE7E00B26149 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		2BF74A9E2B7CEE8800B26149 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
+		2BF74AA02B7CEE9200B26149 /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
+		2BF74AA22B7CEEA400B26149 /* PriorityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityView.swift; sourceTree = "<group>"; };
+		2BF74AA72B7D37E400B26149 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		2BF74AA92B7D37EE00B26149 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BF74A872B7CC11800B26149 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				2BF74A732B7CB1BF00B26149 /* Base */,
+				2BF74A882B7CCC8B00B26149 /* Protocol */,
+				2BF74A8B2B7CCCAD00B26149 /* Extension */,
 				2BF74A6E2B7CAF5B00B26149 /* Main */,
 				2BF74A782B7CB20800B26149 /* Add */,
 				2BF74A7D2B7CB23E00B26149 /* Date */,
@@ -98,6 +130,7 @@
 			children = (
 				2BF74A712B7CB1BB00B26149 /* MainView.swift */,
 				2BF74A6F2B7CB1B000B26149 /* MainViewController.swift */,
+				2BF74AA72B7D37E400B26149 /* MainCollectionViewCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -107,6 +140,8 @@
 			children = (
 				2BF74A742B7CB1C900B26149 /* BaseView.swift */,
 				2BF74A762B7CB1D500B26149 /* BaseViewController.swift */,
+				2BF74A902B7CCD2800B26149 /* BaseTableViewCell.swift */,
+				2BF74AA92B7D37EE00B26149 /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -114,8 +149,10 @@
 		2BF74A782B7CB20800B26149 /* Add */ = {
 			isa = PBXGroup;
 			children = (
-				2BF74A792B7CB20E00B26149 /* AddViewController.swift */,
 				2BF74A7B2B7CB21B00B26149 /* AddView.swift */,
+				2BF74A792B7CB20E00B26149 /* AddViewController.swift */,
+				2BF74A8E2B7CCD0400B26149 /* AddTableViewCell.swift */,
+				2BF74A922B7CE51800B26149 /* AddTextFieldTableViewCell.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -123,6 +160,8 @@
 		2BF74A7D2B7CB23E00B26149 /* Date */ = {
 			isa = PBXGroup;
 			children = (
+				2BF74A9A2B7CEC4900B26149 /* DateView.swift */,
+				2BF74A982B7CEC3D00B26149 /* DateViewController.swift */,
 			);
 			path = Date;
 			sourceTree = "<group>";
@@ -130,6 +169,8 @@
 		2BF74A7E2B7CB24600B26149 /* Tag */ = {
 			isa = PBXGroup;
 			children = (
+				2BF74A9C2B7CEE7E00B26149 /* TagView.swift */,
+				2BF74A9E2B7CEE8800B26149 /* TagViewController.swift */,
 			);
 			path = Tag;
 			sourceTree = "<group>";
@@ -137,6 +178,8 @@
 		2BF74A7F2B7CB25000B26149 /* Priority */ = {
 			isa = PBXGroup;
 			children = (
+				2BF74AA22B7CEEA400B26149 /* PriorityView.swift */,
+				2BF74AA02B7CEE9200B26149 /* PriorityViewController.swift */,
 			);
 			path = Priority;
 			sourceTree = "<group>";
@@ -148,6 +191,23 @@
 				2BF74A832B7CB29300B26149 /* AddImageViewController.swift */,
 			);
 			path = AddImage;
+			sourceTree = "<group>";
+		};
+		2BF74A882B7CCC8B00B26149 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				2BF74A892B7CCC9D00B26149 /* Protocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		2BF74A8B2B7CCCAD00B26149 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				2BF74A8C2B7CCCDC00B26149 /* Reuseable.swift */,
+				2BF74A942B7CEBE000B26149 /* UIViewController + Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +226,9 @@
 			dependencies = (
 			);
 			name = Reminders;
+			packageProductDependencies = (
+				2BF74A862B7CC11800B26149 /* SnapKit */,
+			);
 			productName = Reminders;
 			productReference = 2BF74A552B7CAEB300B26149 /* Reminders.app */;
 			productType = "com.apple.product-type.application";
@@ -194,6 +257,9 @@
 				Base,
 			);
 			mainGroup = 2BF74A4C2B7CAEB300B26149;
+			packageReferences = (
+				2BF74A852B7CC11800B26149 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 2BF74A562B7CAEB300B26149 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -222,17 +288,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BF74AA12B7CEE9200B26149 /* PriorityViewController.swift in Sources */,
 				2BF74A5D2B7CAEB300B26149 /* ViewController.swift in Sources */,
+				2BF74AA32B7CEEA400B26149 /* PriorityView.swift in Sources */,
 				2BF74A592B7CAEB300B26149 /* AppDelegate.swift in Sources */,
+				2BF74A8D2B7CCCDC00B26149 /* Reuseable.swift in Sources */,
 				2BF74A7C2B7CB21B00B26149 /* AddView.swift in Sources */,
 				2BF74A7A2B7CB20E00B26149 /* AddViewController.swift in Sources */,
 				2BF74A5B2B7CAEB300B26149 /* SceneDelegate.swift in Sources */,
+				2BF74A9F2B7CEE8800B26149 /* TagViewController.swift in Sources */,
 				2BF74A752B7CB1C900B26149 /* BaseView.swift in Sources */,
 				2BF74A722B7CB1BB00B26149 /* MainView.swift in Sources */,
 				2BF74A842B7CB29300B26149 /* AddImageViewController.swift in Sources */,
+				2BF74A8F2B7CCD0400B26149 /* AddTableViewCell.swift in Sources */,
 				2BF74A772B7CB1D500B26149 /* BaseViewController.swift in Sources */,
+				2BF74A9D2B7CEE7E00B26149 /* TagView.swift in Sources */,
+				2BF74AAA2B7D37EE00B26149 /* BaseCollectionViewCell.swift in Sources */,
 				2BF74A812B7CB27100B26149 /* AddImageView.swift in Sources */,
 				2BF74A702B7CB1B000B26149 /* MainViewController.swift in Sources */,
+				2BF74A912B7CCD2800B26149 /* BaseTableViewCell.swift in Sources */,
+				2BF74A952B7CEBE000B26149 /* UIViewController + Extension.swift in Sources */,
+				2BF74AA82B7D37E400B26149 /* MainCollectionViewCell.swift in Sources */,
+				2BF74A8A2B7CCC9D00B26149 /* Protocol.swift in Sources */,
+				2BF74A992B7CEC3D00B26149 /* DateViewController.swift in Sources */,
+				2BF74A9B2B7CEC4900B26149 /* DateView.swift in Sources */,
+				2BF74A932B7CE51800B26149 /* AddTextFieldTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +539,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2BF74A852B7CC11800B26149 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2BF74A862B7CC11800B26149 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BF74A852B7CC11800B26149 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2BF74A4D2B7CAEB300B26149 /* Project object */;
 }
