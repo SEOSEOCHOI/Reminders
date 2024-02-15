@@ -29,5 +29,7 @@ class AddView: BaseView {
     
     override func configureView() {
         super.configureView()
+        backgroundColor = .systemGray6
+
     }
 }

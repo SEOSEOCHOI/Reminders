@@ -6,37 +6,49 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol PassDataDelegate {
-    func priorityReceived(text: String)
+    func priorityReceived(selectIndex: Int)
     func dateReceived(text: String)
 }
 
 class AddViewController: BaseViewController {
-
     
     let mainView = AddView()
-
+    
     override func loadView() {
         self.view = mainView
     }
-    // var addList = ["마감일","태그", "우선 순위", "이미지 추가"]
+    
+    var sectionTitleList: [String] = ["마감일", "태그", "우선순위", "이미지 추가"]
+    var subTitleList: [String] = ["", "", ""]
+    var textViewTag: [Int] = []
+    
+    var titleString: String = ""
+    var memo: String?
+    lazy var endDate = Date()
+    var tag: String = ""
+    var priorty: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
-        
     }
-    
+}
+
+extension AddViewController {
     func configureNavigation() {
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonClicked))
         let addButtom = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addButtonClicked))
-
+        
         navigationItem.title = "새로운 할 일"
+        
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = addButtom
+        navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
     }
     
     @objc func cancelButtonClicked() {
@@ -44,7 +56,36 @@ class AddViewController: BaseViewController {
     }
     
     @objc func addButtonClicked() {
+        print(tag)
+        
         print(#function)
+        let realm = try! Realm()
+        
+        print(realm.configuration.fileURL)
+        
+        let data = RemindersTable(title: titleString, memo: memo, endDate: endDate, tag: tag, priority: priorty)
+        try! realm.write{
+            realm.add(data)
+            print("Realm Create")
+        }
+        
+        NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
+                                        object: nil,
+                                        userInfo: ["reminders":realm])
+        dismiss(animated: true)
+    }
+    
+    func isAddButtonEnable() -> Bool {
+        if titleString == "" {
+            return false
+        }
+        for list in subTitleList {
+            if list == "" {
+                return false
+            }
+        }
+        
+        return true
     }
 }
 
@@ -64,25 +105,46 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: AddTextFieldTableViewCell.identifier, for: indexPath) as! AddTextFieldTableViewCell
-            cell.textView.delegate = self
             
-            cell.backgroundColor = .lightGray
+            let placeholderText = ["제목", "메모"]
+            let inputString: [String?] = [titleString, memo]
+            
+            cell.textView.delegate = self
+            cell.textView.tag = indexPath.row
+
+            if let inputText = inputString[indexPath.row] { // 제목
+                if inputText != "" { // 제목이 빈 문자열이 아닐 때
+                    cell.textView.text = inputText
+                    cell.textView.textColor = .white
+                } else { // 빈 문자열일 때
+                    cell.textView.textColor = .lightGray
+                    cell.textView.text = placeholderText[indexPath.row]
+                }
+            } else {
+                if inputString[indexPath.row] != nil {
+                    cell.textView.textColor = .white
+                    cell.textView.text = inputString[indexPath.row]
+                } else {
+                    cell.textView.textColor = .lightGray
+                    cell.textView.text = placeholderText[indexPath.row]
+                }
+            }
+            print(indexPath, inputString, cell.textView.text)
+
             return cell
+            
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: AddTableViewCell.identifier, for: indexPath) as! AddTableViewCell
+            let section = indexPath.section - 1
             
-            cell.accessoryType = .disclosureIndicator
-
-            if indexPath.section == 1 {
-                cell.label.text = "마감일"
-            } else if indexPath.section == 2 {
-                cell.label.text = "태그"
-            } else if indexPath.section == 3 {
-                cell.label.text = "우선순위"
+            if indexPath.section != 4 {
+                cell.subTitleLabel.text = subTitleList[section]
             } else {
-                cell.label.text = "이미지 추가"
+                cell.subTitleLabel.text = ""
             }
             
+            cell.label.text = sectionTitleList[section]
+            cell.accessoryType = .disclosureIndicator
             return cell
         }
     }
@@ -100,27 +162,28 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
         switch indexPath.section {
         case 0:
             break
             
         default:
+            let cell = tableView.cellForRow(at: indexPath) as! AddTableViewCell
             if indexPath.section == 1 { // delegate 값 전달
                 let vc = DateViewController()
-                
                 vc.delegate = self
-                
                 transition(style: .push, viewController: vc)
                 
-            } else if indexPath.section == 2 { // closure 값 전달 왜 안되지
+            } else if indexPath.section == 2 { // closure 값 전달
                 let vc = TagViewController()
                 
                 vc.money = { value in
-                    print(value)
-            }
-            
-            transition(style: .push, viewController: vc)
+                    self.subTitleList[1] = value
+                    
+                    cell.subTitleLabel.text = self.subTitleList[1]
+                    self.tag = self.subTitleList[1]
+                }
+                
+                transition(style: .push, viewController: vc)
                 
             } else if indexPath.section == 3 { // delegate 값전달
                 let vc = PriorityViewController()
@@ -134,30 +197,56 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// TODO: TextViewPlaceHolder
 extension AddViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "내용을 입력해 주세요"
-            textView.textColor = .lightGray
-        }
+        mainView.tableView.reloadData()
     }
     
     // 텍스트 커서가 시작하는 순간. 편집이 시작될 때
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .lightGray {
             textView.text = nil
-            textView.textColor = .black
+            textView.textColor = .white
         }
+        print(#function, titleString, memo)
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.textColor != .lightGray {
+            if textView.tag == 0 {
+                    titleString = textView.text
+            } else {
+                if textView.text != "" {
+                    memo = textView.text
+                } else {
+                    memo = nil
+                }
+            }
+        }
+        print(titleString,memo)
+        navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
     }
 }
 
 extension AddViewController: PassDataDelegate {
-    func priorityReceived(text: String) {
-        print(text)
+    func priorityReceived(selectIndex: Int) {
+        let priotyList = Priority.allCases
+        priorty = selectIndex
+
+        subTitleList[2] = priotyList[priorty].rawValue
+        mainView.tableView.reloadData()
     }
     
     func dateReceived(text: String) {
-        print(text)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy / MM / dd"
+        formatter.locale = Locale(identifier: "ko-KR")
+        
+        if let date = formatter.date(from: text) {
+            endDate = date
+        }
+        
+        subTitleList[0] = text
+        mainView.tableView.reloadData()
     }
 }

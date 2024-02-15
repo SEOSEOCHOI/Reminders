@@ -22,6 +22,7 @@ class BaseTableViewCell: UITableViewCell {
     }
     
     func configureView() {
+        backgroundColor = .systemGray5
     }
     
     override func awakeFromNib() {

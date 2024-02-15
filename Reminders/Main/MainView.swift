@@ -24,12 +24,12 @@ class MainView: BaseView {
     
     override func configureLayout() {
         label.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.top.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(8)
         }
         collectionView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
             
-            make.top.equalTo(label.snp.bottom).offset(20)
+            make.top.equalTo(label.snp.bottom).offset(8)
         }
     }
     
@@ -49,7 +49,7 @@ class MainView: BaseView {
         layout.itemSize = CGSize(width: cellWidth / 2, height: cellWidth / 4)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
         layout.scrollDirection = .vertical
         
         return layout

@@ -22,8 +22,9 @@ class AddTextFieldTableViewCell: BaseTableViewCell {
     }
     
     override func configureView() {
-        textView.textColor = .white
+        super.configureView()
         textView.font = .systemFont(ofSize: 15)
+        textView.backgroundColor = .clear
     }
 
     override func awakeFromNib() {

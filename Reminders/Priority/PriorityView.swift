@@ -10,9 +10,15 @@ import SnapKit
 
 class PriorityView: BaseView {
 
-    lazy var prioritySegment = UISegmentedControl(items: priority)
+    lazy var prioritySegment = UISegmentedControl(items: priorityList)
     
-    let priority: [String] = ["최고", "중간", "최저"]
+    var priorityList: [String] {
+        var list: [String] = []
+        for priority in Priority.allCases {
+            list.append(priority.rawValue)
+        }
+        return list
+    }
 
     override func configureHierarchy() {
     addSubview(prioritySegment)

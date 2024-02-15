@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainViewController: BaseViewController {
     let mainView = MainView()
@@ -18,6 +19,8 @@ class MainViewController: BaseViewController {
                                "flag.fill",
                                "checkmark"]
     
+    var realmList: Results<RemindersTable>?
+    
     override func loadView() {
         self.view = mainView
     }
@@ -26,7 +29,25 @@ class MainViewController: BaseViewController {
         configureToolBar()
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        
+        //realm 두번 만들어도되나...??
+        let realm = try! Realm()
+        
+        realmList = realm.objects(RemindersTable.self)
+
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(totalCountReceivedNotification), name: NSNotification.Name("TotalCountReceived"), object: nil)
     }
+    
+    @objc func totalCountReceivedNotification(notification: NSNotification) {
+        if let value = notification.userInfo?["reminders"] as? Realm {
+            realmList = value.objects(RemindersTable.self)
+            print(#function, realmList?.count)
+            mainView.collectionView.reloadData()
+        }
+    }
+    
+    
     func configureToolBar() {
         self.navigationController?.isToolbarHidden = false
         
@@ -65,15 +86,20 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
+
+        if indexPath.item == 2 {
+            if let realmList = realmList {
+                cell.countLabel.text = "\(realmList.count)"
+            }
+        } else {
+            cell.countLabel.text = "0"
+        }
         
-        cell.countLabel.text = "0"
         
         cell.statusLabel.text = list[indexPath.item]
         
-
         cell.statusImageView.backgroundColor = colorList[indexPath.item]
         cell.statusImageView.image = UIImage(systemName: imageList[indexPath.item])
-
 
         cell.backgroundColor = .darkGray
         cell.layer.cornerRadius = 12

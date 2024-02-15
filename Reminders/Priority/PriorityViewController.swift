@@ -25,7 +25,7 @@ class PriorityViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         guard let selectedSegment = selectedSegment else { return }
-            delegate?.priorityReceived(text: mainView.prioritySegment.titleForSegment(at:selectedSegment)!)
+        delegate?.priorityReceived(selectIndex: mainView.prioritySegment.selectedSegmentIndex)
     }
     
     @objc func segmentChanged(sender: UISegmentedControl) {

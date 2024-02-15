@@ -11,7 +11,7 @@ import SnapKit
 class MainCollectionViewCell: BaseCollectionViewCell {
     let statusLabel = UILabel()
     let countLabel = UILabel()
-    let statusImageView = UIImageView()
+    var statusImageView = UIImageView()
     
     override func configureHierarchy() {
         addSubview(statusLabel)
@@ -29,13 +29,16 @@ class MainCollectionViewCell: BaseCollectionViewCell {
         countLabel.snp.makeConstraints { make in
             make.trailing.top.equalTo(safeAreaLayoutGuide).inset(10)
             make.height.equalTo(safeAreaLayoutGuide).dividedBy(2)
-            make.width.equalTo(statusImageView.snp.height)
+            make.width.equalTo(countLabel.snp.height)
         }
         
         statusImageView.snp.makeConstraints { make in
             make.top.leading.equalTo(safeAreaLayoutGuide).inset(8)
-            make.height.equalTo(safeAreaLayoutGuide).dividedBy(2)
-            make.width.equalTo(statusImageView.snp.height)
+            print(4)
+            make.height.equalTo(50)
+            print(5)
+            make.width.equalTo(50)
+            print(6)
         }
     }
     
@@ -46,14 +49,25 @@ class MainCollectionViewCell: BaseCollectionViewCell {
         countLabel.textColor = .white
         countLabel.font = .boldSystemFont(ofSize: 32)
         countLabel.textAlignment = .center
+        countLabel.backgroundColor = .red
         
         statusImageView.tintColor = .white
-        DispatchQueue.main.async {
-            self.statusImageView.layer.cornerRadius = self.statusImageView.frame.width / 2
-        }
-        statusImageView.contentMode = .scaleAspectFit
-        statusImageView.clipsToBounds = true
-        // 이미지가 너무 꽉차는데,...ㅠ
+        print(1)
+        /*
+         contentsize가 모두 잡힌 이후에...
+         layout 시점
+         draw시점
+         constraints시점
+         어느 시점에 실행되는지
+         */
 
+            print(2)
+            print(3)
+        statusImageView.contentMode = .center
+        statusImageView.clipsToBounds = true
+
+        
+        let config = UIImage.SymbolConfiguration(scale: .large)
+        statusImageView.preferredSymbolConfiguration = config
     }
 }
