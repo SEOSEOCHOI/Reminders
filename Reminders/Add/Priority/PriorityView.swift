@@ -15,7 +15,7 @@ class PriorityView: BaseView {
     var priorityList: [String] {
         var list: [String] = []
         for priority in Priority.allCases {
-            list.append(priority.rawValue)
+            list.append(priority.priorityTitle)
         }
         return list
     }

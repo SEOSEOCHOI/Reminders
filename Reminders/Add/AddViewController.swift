@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 protocol PassDataDelegate {
     func priorityReceived(selectIndex: Int)
@@ -24,18 +23,25 @@ class AddViewController: BaseViewController {
     var sectionTitleList: [String] = ["마감일", "태그", "우선순위", "이미지 추가"]
     var subTitleList: [String] = ["", "", ""]
     var textViewTag: [Int] = []
+    let placeholderText = ["제목", "메모"]
+    let repository = ReminderRepository()
     
     var titleString: String = ""
     var memo: String?
     lazy var endDate = Date()
     var tag: String = ""
     var priorty: Int = 0
+    var isDone:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
+
     }
 }
 
@@ -58,20 +64,12 @@ extension AddViewController {
     @objc func addButtonClicked() {
         print(tag)
         
-        print(#function)
-        let realm = try! Realm()
-        
-        print(realm.configuration.fileURL)
-        
-        let data = RemindersTable(title: titleString, memo: memo, endDate: endDate, tag: tag, priority: priorty)
-        try! realm.write{
-            realm.add(data)
-            print("Realm Create")
-        }
+        let data = RemindersTable(title: titleString, memo: memo, endDate: endDate, tag: tag, priority: priorty, isDone: isDone)
+        repository.creatRecord(data)
         
         NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
                                         object: nil,
-                                        userInfo: ["reminders":realm])
+                                        userInfo: ["reminders":repository.fetch()])
         dismiss(animated: true)
     }
     
@@ -106,7 +104,6 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: AddTextFieldTableViewCell.identifier, for: indexPath) as! AddTextFieldTableViewCell
             
-            let placeholderText = ["제목", "메모"]
             let inputString: [String?] = [titleString, memo]
             
             cell.textView.delegate = self
@@ -129,8 +126,7 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.textView.text = placeholderText[indexPath.row]
                 }
             }
-            print(indexPath, inputString, cell.textView.text)
-
+            
             return cell
             
         default:
@@ -142,7 +138,7 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell.subTitleLabel.text = ""
             }
-            
+
             cell.label.text = sectionTitleList[section]
             cell.accessoryType = .disclosureIndicator
             return cell
@@ -199,7 +195,14 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension AddViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
-        mainView.tableView.reloadData()
+        if textView.text == "" {
+            if textView.tag == 0 {
+                textView.text = placeholderText[0]
+            } else {
+                textView.text = placeholderText[1]
+            }
+            textView.textColor = .lightGray
+        }
     }
     
     // 텍스트 커서가 시작하는 순간. 편집이 시작될 때
@@ -223,8 +226,12 @@ extension AddViewController: UITextViewDelegate {
                 }
             }
         }
-        print(titleString,memo)
         navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
+        print(titleString,memo)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // 키보드 숨기기
+        return true
     }
 }
 
@@ -233,7 +240,7 @@ extension AddViewController: PassDataDelegate {
         let priotyList = Priority.allCases
         priorty = selectIndex
 
-        subTitleList[2] = priotyList[priorty].rawValue
+        subTitleList[2] = priotyList[priorty].priorityTitle
         mainView.tableView.reloadData()
     }
     

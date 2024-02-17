@@ -6,8 +6,19 @@
 //
 
 import Foundation
-enum Priority: String, CaseIterable {
-    case top = "높음"
-    case middle = "중간"
-    case low = "낮음"
+enum Priority: Int, CaseIterable {
+    case top
+    case middle
+    case low
+    
+    var priorityTitle: String {
+        switch self {
+        case .top:
+            return "높음"
+        case .middle:
+            return "낮음"
+        case .low:
+            return "중간"
+        }
+    }
 }

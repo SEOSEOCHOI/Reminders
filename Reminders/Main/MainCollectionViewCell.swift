@@ -11,7 +11,10 @@ import SnapKit
 class MainCollectionViewCell: BaseCollectionViewCell {
     let statusLabel = UILabel()
     let countLabel = UILabel()
-    var statusImageView = UIImageView()
+    var statusImageView = UIImageView(frame: .zero)
+    
+    // statusImageView는MainCollectionViewCell이 초기화되ㅏㄹ때만들어딤
+    // 셀이초기화될떄 크기를 모름
     
     override func configureHierarchy() {
         addSubview(statusLabel)
@@ -21,25 +24,27 @@ class MainCollectionViewCell: BaseCollectionViewCell {
     
     override func configureConstraints() {
         statusLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
+            make.horizontalEdges.equalToSuperview().inset(10)
             make.top.equalTo(statusImageView.snp.bottom).offset(8)
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(10)
+//            make.bottom.equalToSuperview().inset(10)
         }
         
         countLabel.snp.makeConstraints { make in
-            make.trailing.top.equalTo(safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(safeAreaLayoutGuide).dividedBy(2)
+            make.trailing.top.equalToSuperview().inset(10)
+            make.height.equalToSuperview().dividedBy(3)
             make.width.equalTo(countLabel.snp.height)
         }
         
         statusImageView.snp.makeConstraints { make in
-            make.top.leading.equalTo(safeAreaLayoutGuide).inset(8)
-            print(4)
-            make.height.equalTo(50)
-            print(5)
-            make.width.equalTo(50)
-            print(6)
+            make.top.leading.equalToSuperview().inset(10)
+            make.height.equalToSuperview().dividedBy(3)
+            make.width.equalTo(statusImageView.snp.height)
         }
+    }
+
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        
     }
     
     override func configureView() {
@@ -52,14 +57,23 @@ class MainCollectionViewCell: BaseCollectionViewCell {
         countLabel.backgroundColor = .red
         
         statusImageView.tintColor = .white
+        
         print(1)
         /*
+         Constraints -> Layout -> Draw
+         
+         Constraints: configurelayout NSConstraints
+         
+         
          contentsize가 모두 잡힌 이후에...
          layout 시점
          draw시점
          constraints시점
          어느 시점에 실행되는지
          */
+        // 유동적인 사이즈를 잡는 게 아니라서.... 정해진 수치에서 그려주니까......
+  
+        
 
             print(2)
             print(3)

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B36B1B02B8099CC001F911B /* ReminderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1AF2B8099CC001F911B /* ReminderRepository.swift */; };
+		2B36B1B32B80A446001F911B /* AllListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1B22B80A446001F911B /* AllListViewController.swift */; };
+		2B36B1B52B80A450001F911B /* AllListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1B42B80A450001F911B /* AllListView.swift */; };
+		2B36B1B72B80A45E001F911B /* AllListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1B62B80A45E001F911B /* AllListTableViewCell.swift */; };
 		2B401E9B2B7EB45900CF4097 /* Enumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B401E9A2B7EB45900CF4097 /* Enumeration.swift */; };
 		2BE75FD52B7DFED3001859CA /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE75FD42B7DFED3001859CA /* RealmModel.swift */; };
 		2BE75FD82B7DFF1C001859CA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2BE75FD72B7DFF1C001859CA /* Realm */; };
@@ -44,6 +48,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B36B1AF2B8099CC001F911B /* ReminderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderRepository.swift; sourceTree = "<group>"; };
+		2B36B1B22B80A446001F911B /* AllListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListViewController.swift; sourceTree = "<group>"; };
+		2B36B1B42B80A450001F911B /* AllListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListView.swift; sourceTree = "<group>"; };
+		2B36B1B62B80A45E001F911B /* AllListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListTableViewCell.swift; sourceTree = "<group>"; };
 		2B401E9A2B7EB45900CF4097 /* Enumeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumeration.swift; sourceTree = "<group>"; };
 		2BE75FD42B7DFED3001859CA /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 		2BF74A552B7CAEB300B26149 /* Reminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,10 +101,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B36B1B12B80A430001F911B /* AllList */ = {
+			isa = PBXGroup;
+			children = (
+				2B36B1B42B80A450001F911B /* AllListView.swift */,
+				2B36B1B22B80A446001F911B /* AllListViewController.swift */,
+				2B36B1B62B80A45E001F911B /* AllListTableViewCell.swift */,
+			);
+			path = AllList;
+			sourceTree = "<group>";
+		};
 		2BE75FD32B7DFEBC001859CA /* Realm */ = {
 			isa = PBXGroup;
 			children = (
 				2BE75FD42B7DFED3001859CA /* RealmModel.swift */,
+				2B36B1AF2B8099CC001F911B /* ReminderRepository.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -128,10 +147,7 @@
 				2BF74A8B2B7CCCAD00B26149 /* Extension */,
 				2BF74A6E2B7CAF5B00B26149 /* Main */,
 				2BF74A782B7CB20800B26149 /* Add */,
-				2BF74A7D2B7CB23E00B26149 /* Date */,
-				2BF74A7E2B7CB24600B26149 /* Tag */,
-				2BF74A7F2B7CB25000B26149 /* Priority */,
-				2BF74A822B7CB27700B26149 /* AddImage */,
+				2B36B1B12B80A430001F911B /* AllList */,
 				2BF74A582B7CAEB300B26149 /* AppDelegate.swift */,
 				2BF74A5A2B7CAEB300B26149 /* SceneDelegate.swift */,
 				2BF74A5C2B7CAEB300B26149 /* ViewController.swift */,
@@ -167,10 +183,14 @@
 		2BF74A782B7CB20800B26149 /* Add */ = {
 			isa = PBXGroup;
 			children = (
+				2BF74A822B7CB27700B26149 /* AddImage */,
 				2BF74A7B2B7CB21B00B26149 /* AddView.swift */,
 				2BF74A792B7CB20E00B26149 /* AddViewController.swift */,
 				2BF74A8E2B7CCD0400B26149 /* AddTableViewCell.swift */,
 				2BF74A922B7CE51800B26149 /* AddTextFieldTableViewCell.swift */,
+				2BF74A7D2B7CB23E00B26149 /* Date */,
+				2BF74A7F2B7CB25000B26149 /* Priority */,
+				2BF74A7E2B7CB24600B26149 /* Tag */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -309,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B36B1B32B80A446001F911B /* AllListViewController.swift in Sources */,
 				2BF74AA12B7CEE9200B26149 /* PriorityViewController.swift in Sources */,
 				2BF74A5D2B7CAEB300B26149 /* ViewController.swift in Sources */,
 				2B401E9B2B7EB45900CF4097 /* Enumeration.swift in Sources */,
@@ -328,12 +349,15 @@
 				2BF74A9D2B7CEE7E00B26149 /* TagView.swift in Sources */,
 				2BF74AAA2B7D37EE00B26149 /* BaseCollectionViewCell.swift in Sources */,
 				2BF74A812B7CB27100B26149 /* AddImageView.swift in Sources */,
+				2B36B1B72B80A45E001F911B /* AllListTableViewCell.swift in Sources */,
 				2BF74A702B7CB1B000B26149 /* MainViewController.swift in Sources */,
 				2BF74A912B7CCD2800B26149 /* BaseTableViewCell.swift in Sources */,
 				2BF74A952B7CEBE000B26149 /* UIViewController + Extension.swift in Sources */,
+				2B36B1B52B80A450001F911B /* AllListView.swift in Sources */,
 				2BF74AA82B7D37E400B26149 /* MainCollectionViewCell.swift in Sources */,
 				2BF74A8A2B7CCC9D00B26149 /* Protocol.swift in Sources */,
 				2BF74A992B7CEC3D00B26149 /* DateViewController.swift in Sources */,
+				2B36B1B02B8099CC001F911B /* ReminderRepository.swift in Sources */,
 				2BF74A9B2B7CEC4900B26149 /* DateView.swift in Sources */,
 				2BF74A932B7CE51800B26149 /* AddTextFieldTableViewCell.swift in Sources */,
 			);

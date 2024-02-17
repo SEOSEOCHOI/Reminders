@@ -19,7 +19,8 @@ class MainViewController: BaseViewController {
                                "flag.fill",
                                "checkmark"]
     
-    var realmList: Results<RemindersTable>?
+    let repository = ReminderRepository()
+    var realmList: Results<RemindersTable>!
     
     override func loadView() {
         self.view = mainView
@@ -29,20 +30,16 @@ class MainViewController: BaseViewController {
         configureToolBar()
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
-        
-        //realm 두번 만들어도되나...??
-        let realm = try! Realm()
-        
-        realmList = realm.objects(RemindersTable.self)
-
-        
+        realmList = repository.fetch()
+         
         NotificationCenter.default.addObserver(self, selector: #selector(totalCountReceivedNotification), name: NSNotification.Name("TotalCountReceived"), object: nil)
     }
     
     @objc func totalCountReceivedNotification(notification: NSNotification) {
-        if let value = notification.userInfo?["reminders"] as? Realm {
-            realmList = value.objects(RemindersTable.self)
+        if notification.userInfo?["reminders"] is Results<RemindersTable> {
+            realmList = repository.fetch()
             print(#function, realmList?.count)
+
             mainView.collectionView.reloadData()
         }
     }
@@ -88,9 +85,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
 
         if indexPath.item == 2 {
-            if let realmList = realmList {
                 cell.countLabel.text = "\(realmList.count)"
-            }
         } else {
             cell.countLabel.text = "0"
         }
@@ -107,5 +102,10 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = AllListViewController()
+        vc.navigationTitle = list[indexPath.item]
+        transition(style: .push, viewController: vc)
+    }
     
 }
