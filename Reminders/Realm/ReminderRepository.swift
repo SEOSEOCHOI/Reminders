@@ -37,6 +37,30 @@ final class ReminderRepository {
         realm.objects(RemindersTable.self).sorted(byKeyPath: "priority", ascending: true)
     }
     
+    func fetchDoneFilter(isDone: Bool) -> Results<RemindersTable> {
+        realm.objects(RemindersTable.self).where {
+            $0.isDone == true
+        }
+    }
+    
+    func fetchDoneEndDateFilter(isDone: Bool) -> Results<RemindersTable> {
+        realm.objects(RemindersTable.self).where {
+            $0.isDone == true
+        }.sorted(byKeyPath: "endDate", ascending: true)
+    }
+    
+    func fetchDoneNameSortFilter(isDone: Bool) -> Results<RemindersTable> {
+        realm.objects(RemindersTable.self).where {
+            $0.isDone == true
+        }.sorted(byKeyPath: "title", ascending: true)
+    }
+    
+    func fetchDonePriorityFilter(isDone: Bool) -> Results<RemindersTable> {
+        realm.objects(RemindersTable.self).where{
+            $0.isDone == true
+        }.sorted(byKeyPath: "priority", ascending: true)
+    }
+    
     func delete(_ item: RemindersTable) {
         do {
             try realm.write {
@@ -49,7 +73,6 @@ final class ReminderRepository {
     
     func updateDone(_ item: RemindersTable) {
         do {
-            
             try realm.write {
                 item.isDone.toggle()
             }

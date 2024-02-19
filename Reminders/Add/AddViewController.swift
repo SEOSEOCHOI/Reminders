@@ -41,7 +41,6 @@ class AddViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
-
     }
 }
 
@@ -62,14 +61,13 @@ extension AddViewController {
     }
     
     @objc func addButtonClicked() {
-        print(tag)
-        
         let data = RemindersTable(title: titleString, memo: memo, endDate: endDate, tag: tag, priority: priorty, isDone: isDone)
         repository.creatRecord(data)
         
         NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
                                         object: nil,
-                                        userInfo: ["reminders":repository.fetch()])
+                                        userInfo: ["reminders":repository.fetch(),
+                                                   "isDone":repository.fetchDoneFilter(isDone: true)])
         dismiss(animated: true)
     }
     
@@ -253,6 +251,7 @@ extension AddViewController: PassDataDelegate {
             endDate = date
         }
         
+
         subTitleList[0] = text
         mainView.tableView.reloadData()
     }

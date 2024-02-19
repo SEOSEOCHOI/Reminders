@@ -21,4 +21,18 @@ enum Priority: Int, CaseIterable {
             return "중간"
         }
     }
+    
+    var priorityImage: String {
+        switch self {
+        case .top:
+            return "!!!"
+            //return "exclamationmark.3"
+        case .middle:
+            return "!!"
+            //return "exclamationmark.2"
+        case .low:
+            return "!"
+            //return "exclamationmark"        }
+        }
+    }
 }

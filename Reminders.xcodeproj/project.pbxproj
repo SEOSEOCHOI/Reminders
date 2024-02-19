@@ -11,6 +11,11 @@
 		2B36B1B32B80A446001F911B /* AllListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1B22B80A446001F911B /* AllListViewController.swift */; };
 		2B36B1B52B80A450001F911B /* AllListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1B42B80A450001F911B /* AllListView.swift */; };
 		2B36B1B72B80A45E001F911B /* AllListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1B62B80A45E001F911B /* AllListTableViewCell.swift */; };
+		2B36B1B92B81EEC0001F911B /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1B82B81EEC0001F911B /* DateFormatterManager.swift */; };
+		2B36B1BB2B825108001F911B /* DoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1BA2B825108001F911B /* DoneViewController.swift */; };
+		2B36B1BF2B8251A9001F911B /* DoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1BE2B8251A9001F911B /* DoneView.swift */; };
+		2B36B1C12B825272001F911B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1C02B825272001F911B /* DetailView.swift */; };
+		2B36B1C32B825281001F911B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1C22B825281001F911B /* DetailViewController.swift */; };
 		2B401E9B2B7EB45900CF4097 /* Enumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B401E9A2B7EB45900CF4097 /* Enumeration.swift */; };
 		2BE75FD52B7DFED3001859CA /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE75FD42B7DFED3001859CA /* RealmModel.swift */; };
 		2BE75FD82B7DFF1C001859CA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2BE75FD72B7DFF1C001859CA /* Realm */; };
@@ -52,6 +57,11 @@
 		2B36B1B22B80A446001F911B /* AllListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListViewController.swift; sourceTree = "<group>"; };
 		2B36B1B42B80A450001F911B /* AllListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListView.swift; sourceTree = "<group>"; };
 		2B36B1B62B80A45E001F911B /* AllListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListTableViewCell.swift; sourceTree = "<group>"; };
+		2B36B1B82B81EEC0001F911B /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
+		2B36B1BA2B825108001F911B /* DoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneViewController.swift; sourceTree = "<group>"; };
+		2B36B1BE2B8251A9001F911B /* DoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneView.swift; sourceTree = "<group>"; };
+		2B36B1C02B825272001F911B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		2B36B1C22B825281001F911B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2B401E9A2B7EB45900CF4097 /* Enumeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumeration.swift; sourceTree = "<group>"; };
 		2BE75FD42B7DFED3001859CA /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 		2BF74A552B7CAEB300B26149 /* Reminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				2B401E9A2B7EB45900CF4097 /* Enumeration.swift */,
+				2B36B1B82B81EEC0001F911B /* DateFormatterManager.swift */,
 				2BE75FD32B7DFEBC001859CA /* Realm */,
 				2BF74A732B7CB1BF00B26149 /* Base */,
 				2BF74A882B7CCC8B00B26149 /* Protocol */,
@@ -155,6 +166,10 @@
 				2BF74A612B7CAEB500B26149 /* Assets.xcassets */,
 				2BF74A632B7CAEB500B26149 /* LaunchScreen.storyboard */,
 				2BF74A662B7CAEB500B26149 /* Info.plist */,
+				2B36B1BE2B8251A9001F911B /* DoneView.swift */,
+				2B36B1BA2B825108001F911B /* DoneViewController.swift */,
+				2B36B1C02B825272001F911B /* DetailView.swift */,
+				2B36B1C22B825281001F911B /* DetailViewController.swift */,
 			);
 			path = Reminders;
 			sourceTree = "<group>";
@@ -331,10 +346,13 @@
 			files = (
 				2B36B1B32B80A446001F911B /* AllListViewController.swift in Sources */,
 				2BF74AA12B7CEE9200B26149 /* PriorityViewController.swift in Sources */,
+				2B36B1B92B81EEC0001F911B /* DateFormatterManager.swift in Sources */,
+				2B36B1C12B825272001F911B /* DetailView.swift in Sources */,
 				2BF74A5D2B7CAEB300B26149 /* ViewController.swift in Sources */,
 				2B401E9B2B7EB45900CF4097 /* Enumeration.swift in Sources */,
 				2BF74AA32B7CEEA400B26149 /* PriorityView.swift in Sources */,
 				2BF74A592B7CAEB300B26149 /* AppDelegate.swift in Sources */,
+				2B36B1BF2B8251A9001F911B /* DoneView.swift in Sources */,
 				2BF74A8D2B7CCCDC00B26149 /* Reuseable.swift in Sources */,
 				2BF74A7C2B7CB21B00B26149 /* AddView.swift in Sources */,
 				2BF74A7A2B7CB20E00B26149 /* AddViewController.swift in Sources */,
@@ -353,6 +371,8 @@
 				2BF74A702B7CB1B000B26149 /* MainViewController.swift in Sources */,
 				2BF74A912B7CCD2800B26149 /* BaseTableViewCell.swift in Sources */,
 				2BF74A952B7CEBE000B26149 /* UIViewController + Extension.swift in Sources */,
+				2B36B1C32B825281001F911B /* DetailViewController.swift in Sources */,
+				2B36B1BB2B825108001F911B /* DoneViewController.swift in Sources */,
 				2B36B1B52B80A450001F911B /* AllListView.swift in Sources */,
 				2BF74AA82B7D37E400B26149 /* MainCollectionViewCell.swift in Sources */,
 				2BF74A8A2B7CCC9D00B26149 /* Protocol.swift in Sources */,

@@ -1,21 +1,21 @@
 //
-//  ListViewController.swift
+//  DoneViewController.swift
 //  Reminders
 //
-//  Created by 최서경 on 2/17/24.
+//  Created by 최서경 on 2/18/24.
 //
 
 import UIKit
 import RealmSwift
 
-class AllListViewController: BaseViewController {
-    let mainView = AllListView()
+class DoneViewController: BaseViewController {
+    let mainView = DoneView()
     
     var navigationTitle: String = ""
     
-    var reamList: Results<RemindersTable>!
+    var doneList: Results<RemindersTable>!
     let repository = ReminderRepository()
-
+    
     override func loadView() {
         self.view = mainView
     }
@@ -27,12 +27,11 @@ class AllListViewController: BaseViewController {
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
         
-        reamList = repository.fetch()
+        doneList = repository.fetchDoneFilter(isDone: true)
     }
-    
-
 }
-extension AllListViewController {
+// TODO: View Extension
+extension DoneViewController {
     func configureNavigation() {
         navigationItem.title = navigationTitle
 
@@ -40,15 +39,20 @@ extension AllListViewController {
         
         // 마감일순 / 제목순 / 우선순위 낮음
         let dueDate = UIAction(title: "마감일순", handler: { _ in
-            self.reamList = self.repository.fetchEndDateFilter()
+            self.doneList = self.repository.fetchDoneEndDateFilter(isDone: true)
+            print(self.doneList)
+
             self.mainView.tableView.reloadData()
         })
-        let title = UIAction(title: "제목순", handler: { _ in
-            self.reamList = self.repository.fetchNameSortFilter()
+        let title = UIAction(title: "제목순", handler: { _ in            
+            self.doneList = self.repository.fetchDoneNameSortFilter(isDone: true)
+            print(self.doneList)
+
             self.mainView.tableView.reloadData()
         })
-        let priority = UIAction(title: "우선순위 낮음", handler: { _ in
-            self.reamList = self.repository.fetchPriorityFilter()
+        let priority = UIAction(title: "우선순위 낮음", handler: { _ in            
+            self.doneList = self.repository.fetchDonePriorityFilter(isDone: true)
+            print(self.doneList)
             self.mainView.tableView.reloadData()
         })
 
@@ -65,15 +69,16 @@ extension AllListViewController {
         print(#function)
     }
 }
-extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
+
+extension DoneViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reamList.count
+        return doneList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllListTableViewCell.identifier) as! AllListTableViewCell
         let row = indexPath.row
-        let data = reamList[indexPath.row]
+        let data = doneList[indexPath.row]
         let dateFormatter = DateFormatter()
         
         let doneImage = UIImage(systemName: "circle.inset.filled")
@@ -101,11 +106,10 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title: "삭제") { action, view, completionHandler in
 
-            self.repository.delete(self.reamList[indexPath.row])
+            self.repository.delete(self.doneList[indexPath.row])
             tableView.reloadData()
             
             completionHandler(true)
@@ -118,9 +122,8 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
     @objc func doneButtonClicked(_ sender: UIButton) {
-        repository.updateDone(reamList[sender.tag])
+        repository.updateDone(doneList[sender.tag])
         mainView.tableView.reloadData()
         
         NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
@@ -128,4 +131,3 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
                                         userInfo: ["isDone":repository.fetchDoneFilter(isDone: true)])
     }
 }
-

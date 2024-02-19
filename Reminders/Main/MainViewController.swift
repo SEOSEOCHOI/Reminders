@@ -21,6 +21,7 @@ class MainViewController: BaseViewController {
     
     let repository = ReminderRepository()
     var realmList: Results<RemindersTable>!
+    var doneList: Results<RemindersTable>!
     
     override func loadView() {
         self.view = mainView
@@ -31,6 +32,7 @@ class MainViewController: BaseViewController {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         realmList = repository.fetch()
+        doneList = repository.fetchDoneFilter(isDone: true)
          
         NotificationCenter.default.addObserver(self, selector: #selector(totalCountReceivedNotification), name: NSNotification.Name("TotalCountReceived"), object: nil)
     }
@@ -39,6 +41,14 @@ class MainViewController: BaseViewController {
         if notification.userInfo?["reminders"] is Results<RemindersTable> {
             realmList = repository.fetch()
             print(#function, realmList?.count)
+
+            mainView.collectionView.reloadData()
+        }
+        
+        if notification.userInfo?["isDone"] is Results<RemindersTable> {
+            doneList = repository.fetchDoneFilter(isDone: true)
+            
+            print(#function, doneList?.count)
 
             mainView.collectionView.reloadData()
         }
@@ -86,6 +96,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 
         if indexPath.item == 2 {
                 cell.countLabel.text = "\(realmList.count)"
+        } else if indexPath.item == 4 {
+            cell.countLabel.text = "\(doneList.count)"
         } else {
             cell.countLabel.text = "0"
         }
@@ -103,9 +115,21 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.item {
+        case 2:
+            let vc = AllListViewController()
+            vc.navigationTitle = list[indexPath.item]
+            transition(style: .push, viewController: vc)
+        case 4:
+            let vc = DoneViewController()
+            vc.navigationTitle = list[indexPath.item]
+            transition(style: .push, viewController: vc)
+        default:
+            print("A")
+        }
+        
         let vc = AllListViewController()
-        vc.navigationTitle = list[indexPath.item]
-        transition(style: .push, viewController: vc)
+
     }
     
 }
