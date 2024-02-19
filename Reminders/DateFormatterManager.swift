@@ -13,17 +13,20 @@ class DateFormatterManager {
     
     private init() {}
     
-    private let configureDateformmater: DateFormatter = {
+    private let dateformmater: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy / MM / dd"
         formatter.locale = Locale(identifier: "ko-KR")
         
         return formatter
     }()
-
-//    func DateString(from date: Date) -> String{
-//        }
-
-
     
+    func DateToString(from date: Date) -> String {
+        return dateformmater.string(from: date)
+    }
+    
+    func StringToDate(text: String) -> Date? {
+        guard let date = dateformmater.date(from: text) else { return nil }
+        return date
+    }
 }

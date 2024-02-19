@@ -47,7 +47,7 @@ extension AllListViewController {
             self.reamList = self.repository.fetchNameSortFilter()
             self.mainView.tableView.reloadData()
         })
-        let priority = UIAction(title: "우선순위 낮음", handler: { _ in
+        let priority = UIAction(title: "우선순위 높음", handler: { _ in
             self.reamList = self.repository.fetchPriorityFilter()
             self.mainView.tableView.reloadData()
         })
@@ -82,6 +82,7 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         let priotyList = Priority.allCases
         let priorityImage = priotyList[data.priority].priorityImage
         let date = data.endDate
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
         let dateString = dateFormatter.string(from: date)
         
         // TODO: 메모 콜렉션뷰로 해보기
@@ -97,7 +98,13 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.priorityImageView.text = priorityImage
         
-        cell.tagLabel.text = data.tag
+        cell.endDateLabel.text = dateString
+        
+        cell.tagLabel.text = "#\(data.tag)"
+        
+        if let image = loadImageToDocument(fileName: "\(data.id)") {// PK
+            cell.savedImageView.image = image
+        }
         
         return cell
     }
@@ -125,7 +132,7 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         
         NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
                                         object: nil,
-                                        userInfo: ["isDone":repository.fetchDoneFilter(isDone: true)])
+                                        userInfo: ["isDone":repository.fetchDoneFilter()])
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol PassDataDelegate {
     func priorityReceived(selectIndex: Int)
@@ -32,12 +33,16 @@ class AddViewController: BaseViewController {
     var tag: String = ""
     var priorty: Int = 0
     var isDone:Bool = false
+    var selectedImage: UIImage?
+    
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
+        print(#function,realm.configuration.fileURL)
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
@@ -64,10 +69,21 @@ extension AddViewController {
         let data = RemindersTable(title: titleString, memo: memo, endDate: endDate, tag: tag, priority: priorty, isDone: isDone)
         repository.creatRecord(data)
         
+        if let image = selectedImage {
+            saveImageToDocument(image: image, fileName: "\(data.id)")
+        }
+        
         NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
                                         object: nil,
                                         userInfo: ["reminders":repository.fetch(),
-                                                   "isDone":repository.fetchDoneFilter(isDone: true)])
+                                                   "isDone":repository.fetchDoneFilter()])
+        if let customCell = mainView.tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as? AddTableViewCell {
+            if let image = customCell.selectedImageView.image {
+                saveImageToDocument(image: image, fileName: "\(data.id)")
+            }
+        }
+        
+        
         dismiss(animated: true)
     }
     
@@ -83,7 +99,17 @@ extension AddViewController {
         
         return true
     }
+    
+    func isContainImage() -> Bool {
+        if let customCell = mainView.tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as? AddTableViewCell {
+            if customCell.selectedImageView.image != nil {
+                return true
+            }
+        }
+        return false
+    }
 }
+
 
 extension AddViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -106,7 +132,7 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.textView.delegate = self
             cell.textView.tag = indexPath.row
-
+            
             if let inputText = inputString[indexPath.row] { // 제목
                 if inputText != "" { // 제목이 빈 문자열이 아닐 때
                     cell.textView.text = inputText
@@ -130,13 +156,25 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: AddTableViewCell.identifier, for: indexPath) as! AddTableViewCell
             let section = indexPath.section - 1
+            let row = indexPath.row
             
             if indexPath.section != 4 {
                 cell.subTitleLabel.text = subTitleList[section]
+                cell.selectedImageView.isHidden = true
             } else {
                 cell.subTitleLabel.text = ""
-            }
+                // 왜 이미지가 저장됐는데 뷰에 안 나오지..
+                // 다행히 도큐먼트에는 저장이 된다!!!
+                print("test!!!!!!!!!!!")
+                if let selectedImage = selectedImage {
+                    print(selectedImage)
+                    cell.selectedImageView.image = selectedImage.withRenderingMode(.alwaysTemplate)
 
+                } else {
+                    cell.selectedImageView.image = UIImage(systemName: "star")
+                }
+            }
+            
             cell.label.text = sectionTitleList[section]
             cell.accessoryType = .disclosureIndicator
             return cell
@@ -185,7 +223,10 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
                 transition(style: .push, viewController: vc)
                 
             } else {
-                transition(style: .push, viewController: AddImageViewController())
+                let vc = UIImagePickerController()
+                vc.allowsEditing = true
+                vc.delegate = self
+                transition(style: .present, viewController: vc)
             }
         }
     }
@@ -215,7 +256,7 @@ extension AddViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         if textView.textColor != .lightGray {
             if textView.tag == 0 {
-                    titleString = textView.text
+                titleString = textView.text
             } else {
                 if textView.text != "" {
                     memo = textView.text
@@ -237,7 +278,7 @@ extension AddViewController: PassDataDelegate {
     func priorityReceived(selectIndex: Int) {
         let priotyList = Priority.allCases
         priorty = selectIndex
-
+        
         subTitleList[2] = priotyList[priorty].priorityTitle
         mainView.tableView.reloadData()
     }
@@ -250,9 +291,25 @@ extension AddViewController: PassDataDelegate {
         if let date = formatter.date(from: text) {
             endDate = date
         }
-        
-
         subTitleList[0] = text
         mainView.tableView.reloadData()
+    }
+}
+
+extension AddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print(#function)
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print(#function)
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            selectedImage = pickedImage
+            print(selectedImage)
+        }
+        mainView.tableView.reloadData()
+        dismiss(animated: true)
+        
     }
 }

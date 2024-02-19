@@ -9,11 +9,12 @@ import UIKit
 
 class AllListTableViewCell: BaseTableViewCell {
     let doneButton = UIButton()
-    let titleLabel = UILabel()
-    let endDateLabel = UILabel()
-    let memoLabel = UILabel()
-    let priorityImageView = UILabel()
-    let tagLabel = UILabel()
+    let titleLabel = TitleTextLabel()
+    let endDateLabel = DateTextLabel()
+    let memoLabel = MemoTextLabel()
+    let priorityImageView = PriorityTextLabel()
+    let tagLabel = TagTextLabel()
+    let savedImageView = UIImageView()
     
     
     override func configureHierarchy() {
@@ -24,13 +25,7 @@ class AllListTableViewCell: BaseTableViewCell {
         contentView.addSubview(endDateLabel)
         contentView.addSubview(memoLabel)
         contentView.addSubview(tagLabel)
-        
-        doneButton.backgroundColor = .lightGray
-        titleLabel.backgroundColor = .red
-        endDateLabel.backgroundColor = .blue
-        memoLabel.backgroundColor = .green
-        priorityImageView.backgroundColor = .brown
-        tagLabel.backgroundColor = .purple
+        contentView.addSubview(savedImageView)
         
     }
     
@@ -38,6 +33,7 @@ class AllListTableViewCell: BaseTableViewCell {
         let horizentalSpacing = CGFloat(8)
         let verticalSpacing = CGFloat(4)
         let ineerSpacing = CGFloat(4)
+        
         doneButton.snp.makeConstraints { make in
             make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(horizentalSpacing)
             make.top.equalTo(contentView.safeAreaLayoutGuide).inset(verticalSpacing)
@@ -46,18 +42,17 @@ class AllListTableViewCell: BaseTableViewCell {
         titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(priorityImageView.snp.trailing).offset(ineerSpacing)
-            make.trailing.equalToSuperview().inset(horizentalSpacing)
+            make.trailing.equalTo(savedImageView.snp.leading).inset(-verticalSpacing)
             make.top.equalTo(contentView.safeAreaLayoutGuide).inset(verticalSpacing)
             make.height.equalTo(30)
         }
         memoLabel.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.leading)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(horizentalSpacing)
+            make.trailing.equalTo(savedImageView.snp.leading).inset(-verticalSpacing)
             make.top.equalTo(titleLabel.snp.bottom).offset(verticalSpacing)
         }
         endDateLabel.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.leading)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(horizentalSpacing)
             make.top.equalTo(memoLabel.snp.bottom).offset(verticalSpacing)
 
         }
@@ -69,9 +64,14 @@ class AllListTableViewCell: BaseTableViewCell {
             make.centerY.equalTo(titleLabel)
         }
         tagLabel.snp.makeConstraints { make in
-            make.leading.equalTo(memoLabel.snp.leading)
+            make.leading.equalTo(endDateLabel.snp.trailing).offset(4)
             make.top.equalTo(memoLabel.snp.bottom).offset(ineerSpacing)
             make.bottom.equalToSuperview().inset(verticalSpacing)
+        }
+        savedImageView.snp.makeConstraints { make in
+            make.size.equalTo(30)
+            make.trailing.equalToSuperview().inset(horizentalSpacing)
+            make.centerY.equalToSuperview()
         }
     }
     

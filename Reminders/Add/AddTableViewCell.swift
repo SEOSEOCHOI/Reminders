@@ -10,10 +10,12 @@ import UIKit
 class AddTableViewCell: BaseTableViewCell {
     let label = UILabel()
     let subTitleLabel = UILabel()
+    let selectedImageView = UIImageView()
     
     override func configureHierarchy() {
         contentView.addSubview(label)
         contentView.addSubview(subTitleLabel)
+        contentView.addSubview(selectedImageView)
     }
     
     override func configureConstraints() {
@@ -28,6 +30,12 @@ class AddTableViewCell: BaseTableViewCell {
             make.bottom.equalTo(contentView).inset(8)
             make.height.equalTo(20)
         }
+        selectedImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalTo(8)
+            make.size.equalTo(100)
+            make.verticalEdges.equalTo(20)
+        }
     }
     
     override func configureView() {
@@ -37,6 +45,10 @@ class AddTableViewCell: BaseTableViewCell {
         
         subTitleLabel.textColor = .white
         subTitleLabel.font = .systemFont(ofSize: 13)
+        
+        selectedImageView.backgroundColor = .systemPink
+        selectedImageView.contentMode = .scaleAspectFill
+        
     }
 
     override func awakeFromNib() {

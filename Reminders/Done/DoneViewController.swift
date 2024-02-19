@@ -27,7 +27,7 @@ class DoneViewController: BaseViewController {
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
         
-        doneList = repository.fetchDoneFilter(isDone: true)
+        doneList = repository.fetchDoneFilter()
     }
 }
 // TODO: View Extension
@@ -39,19 +39,19 @@ extension DoneViewController {
         
         // 마감일순 / 제목순 / 우선순위 낮음
         let dueDate = UIAction(title: "마감일순", handler: { _ in
-            self.doneList = self.repository.fetchDoneEndDateFilter(isDone: true)
+            self.doneList = self.repository.fetchDoneEndDateFilter()
             print(self.doneList)
 
             self.mainView.tableView.reloadData()
         })
         let title = UIAction(title: "제목순", handler: { _ in            
-            self.doneList = self.repository.fetchDoneNameSortFilter(isDone: true)
+            self.doneList = self.repository.fetchDoneNameSortFilter()
             print(self.doneList)
 
             self.mainView.tableView.reloadData()
         })
         let priority = UIAction(title: "우선순위 낮음", handler: { _ in            
-            self.doneList = self.repository.fetchDonePriorityFilter(isDone: true)
+            self.doneList = self.repository.fetchDonePriorityFilter()
             print(self.doneList)
             self.mainView.tableView.reloadData()
         })
@@ -87,9 +87,10 @@ extension DoneViewController: UITableViewDelegate, UITableViewDataSource {
         let priotyList = Priority.allCases
         let priorityImage = priotyList[data.priority].priorityImage
         let date = data.endDate
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
         let dateString = dateFormatter.string(from: date)
         
-        // TODO: 메모 콜렉션뷰로 해보기
+        // TODO: 메모 여러 개 되면 콜렉션뷰로 해보기
         cell.titleLabel.text = data.title
         
         cell.doneButton.setImage(isDoneImage, for: .normal)
@@ -103,6 +104,15 @@ extension DoneViewController: UITableViewDelegate, UITableViewDataSource {
         cell.priorityImageView.text = priorityImage
         
         cell.tagLabel.text = data.tag
+        if let image = loadImageToDocument(fileName: "\(data.id)") {// PK
+            cell.savedImageView.image = image
+        }
+        
+        cell.endDateLabel.text = dateString
+
+        if let image = loadImageToDocument(fileName: "\(data.id)") {// PK
+            cell.savedImageView.image = image
+        }
         
         return cell
     }
@@ -128,6 +138,6 @@ extension DoneViewController: UITableViewDelegate, UITableViewDataSource {
         
         NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
                                         object: nil,
-                                        userInfo: ["isDone":repository.fetchDoneFilter(isDone: true)])
+                                        userInfo: ["isDone":repository.fetchDoneFilter()])
     }
 }

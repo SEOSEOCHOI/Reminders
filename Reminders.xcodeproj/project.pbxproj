@@ -16,6 +16,15 @@
 		2B36B1BF2B8251A9001F911B /* DoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1BE2B8251A9001F911B /* DoneView.swift */; };
 		2B36B1C12B825272001F911B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1C02B825272001F911B /* DetailView.swift */; };
 		2B36B1C32B825281001F911B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1C22B825281001F911B /* DetailViewController.swift */; };
+		2B36B1C82B838770001F911B /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1C72B838770001F911B /* TodayViewController.swift */; };
+		2B36B1CA2B83877E001F911B /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1C92B83877E001F911B /* TodayView.swift */; };
+		2B36B1CC2B8387B0001F911B /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1CB2B8387B0001F911B /* ScheduleView.swift */; };
+		2B36B1CE2B8387C4001F911B /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1CD2B8387C4001F911B /* ScheduleViewController.swift */; };
+		2B36B1D52B83ADDA001F911B /* TitleTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1D42B83ADDA001F911B /* TitleTextLabel.swift */; };
+		2B36B1D72B83ADEC001F911B /* MemoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1D62B83ADEC001F911B /* MemoLabel.swift */; };
+		2B36B1D92B83ADF6001F911B /* DateTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1D82B83ADF6001F911B /* DateTextLabel.swift */; };
+		2B36B1DB2B83AE01001F911B /* PriorityTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1DA2B83AE01001F911B /* PriorityTextLabel.swift */; };
+		2B36B1DD2B83AEFF001F911B /* TagTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B36B1DC2B83AEFF001F911B /* TagTextLabel.swift */; };
 		2B401E9B2B7EB45900CF4097 /* Enumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B401E9A2B7EB45900CF4097 /* Enumeration.swift */; };
 		2BE75FD52B7DFED3001859CA /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE75FD42B7DFED3001859CA /* RealmModel.swift */; };
 		2BE75FD82B7DFF1C001859CA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2BE75FD72B7DFF1C001859CA /* Realm */; };
@@ -62,6 +71,15 @@
 		2B36B1BE2B8251A9001F911B /* DoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneView.swift; sourceTree = "<group>"; };
 		2B36B1C02B825272001F911B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		2B36B1C22B825281001F911B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		2B36B1C72B838770001F911B /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		2B36B1C92B83877E001F911B /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		2B36B1CB2B8387B0001F911B /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		2B36B1CD2B8387C4001F911B /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		2B36B1D42B83ADDA001F911B /* TitleTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTextLabel.swift; sourceTree = "<group>"; };
+		2B36B1D62B83ADEC001F911B /* MemoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoLabel.swift; sourceTree = "<group>"; };
+		2B36B1D82B83ADF6001F911B /* DateTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTextLabel.swift; sourceTree = "<group>"; };
+		2B36B1DA2B83AE01001F911B /* PriorityTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityTextLabel.swift; sourceTree = "<group>"; };
+		2B36B1DC2B83AEFF001F911B /* TagTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextLabel.swift; sourceTree = "<group>"; };
 		2B401E9A2B7EB45900CF4097 /* Enumeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumeration.swift; sourceTree = "<group>"; };
 		2BE75FD42B7DFED3001859CA /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 		2BF74A552B7CAEB300B26149 /* Reminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +139,54 @@
 			path = AllList;
 			sourceTree = "<group>";
 		};
+		2B36B1CF2B83A87F001F911B /* Done */ = {
+			isa = PBXGroup;
+			children = (
+				2B36B1BE2B8251A9001F911B /* DoneView.swift */,
+				2B36B1BA2B825108001F911B /* DoneViewController.swift */,
+			);
+			path = Done;
+			sourceTree = "<group>";
+		};
+		2B36B1D02B83A88C001F911B /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2B36B1C02B825272001F911B /* DetailView.swift */,
+				2B36B1C22B825281001F911B /* DetailViewController.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		2B36B1D12B83A89D001F911B /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				2B36B1C92B83877E001F911B /* TodayView.swift */,
+				2B36B1C72B838770001F911B /* TodayViewController.swift */,
+			);
+			path = Today;
+			sourceTree = "<group>";
+		};
+		2B36B1D22B83A8AD001F911B /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				2B36B1CB2B8387B0001F911B /* ScheduleView.swift */,
+				2B36B1CD2B8387C4001F911B /* ScheduleViewController.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		2B36B1D32B83ADCB001F911B /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				2B36B1D42B83ADDA001F911B /* TitleTextLabel.swift */,
+				2B36B1D62B83ADEC001F911B /* MemoLabel.swift */,
+				2B36B1D82B83ADF6001F911B /* DateTextLabel.swift */,
+				2B36B1DA2B83AE01001F911B /* PriorityTextLabel.swift */,
+				2B36B1DC2B83AEFF001F911B /* TagTextLabel.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		2BE75FD32B7DFEBC001859CA /* Realm */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,22 +220,23 @@
 				2B36B1B82B81EEC0001F911B /* DateFormatterManager.swift */,
 				2BE75FD32B7DFEBC001859CA /* Realm */,
 				2BF74A732B7CB1BF00B26149 /* Base */,
+				2B36B1D32B83ADCB001F911B /* CustomView */,
 				2BF74A882B7CCC8B00B26149 /* Protocol */,
 				2BF74A8B2B7CCCAD00B26149 /* Extension */,
 				2BF74A6E2B7CAF5B00B26149 /* Main */,
 				2BF74A782B7CB20800B26149 /* Add */,
 				2B36B1B12B80A430001F911B /* AllList */,
+				2B36B1CF2B83A87F001F911B /* Done */,
+				2B36B1D02B83A88C001F911B /* Detail */,
+				2B36B1D12B83A89D001F911B /* Today */,
+				2B36B1D22B83A8AD001F911B /* Schedule */,
+				2BF74A5C2B7CAEB300B26149 /* ViewController.swift */,
 				2BF74A582B7CAEB300B26149 /* AppDelegate.swift */,
 				2BF74A5A2B7CAEB300B26149 /* SceneDelegate.swift */,
-				2BF74A5C2B7CAEB300B26149 /* ViewController.swift */,
 				2BF74A5E2B7CAEB300B26149 /* Main.storyboard */,
 				2BF74A612B7CAEB500B26149 /* Assets.xcassets */,
 				2BF74A632B7CAEB500B26149 /* LaunchScreen.storyboard */,
 				2BF74A662B7CAEB500B26149 /* Info.plist */,
-				2B36B1BE2B8251A9001F911B /* DoneView.swift */,
-				2B36B1BA2B825108001F911B /* DoneViewController.swift */,
-				2B36B1C02B825272001F911B /* DetailView.swift */,
-				2B36B1C22B825281001F911B /* DetailViewController.swift */,
 			);
 			path = Reminders;
 			sourceTree = "<group>";
@@ -352,30 +419,39 @@
 				2B401E9B2B7EB45900CF4097 /* Enumeration.swift in Sources */,
 				2BF74AA32B7CEEA400B26149 /* PriorityView.swift in Sources */,
 				2BF74A592B7CAEB300B26149 /* AppDelegate.swift in Sources */,
+				2B36B1CA2B83877E001F911B /* TodayView.swift in Sources */,
 				2B36B1BF2B8251A9001F911B /* DoneView.swift in Sources */,
 				2BF74A8D2B7CCCDC00B26149 /* Reuseable.swift in Sources */,
+				2B36B1CC2B8387B0001F911B /* ScheduleView.swift in Sources */,
 				2BF74A7C2B7CB21B00B26149 /* AddView.swift in Sources */,
+				2B36B1DD2B83AEFF001F911B /* TagTextLabel.swift in Sources */,
 				2BF74A7A2B7CB20E00B26149 /* AddViewController.swift in Sources */,
 				2BF74A5B2B7CAEB300B26149 /* SceneDelegate.swift in Sources */,
 				2BF74A9F2B7CEE8800B26149 /* TagViewController.swift in Sources */,
 				2BF74A752B7CB1C900B26149 /* BaseView.swift in Sources */,
 				2BF74A722B7CB1BB00B26149 /* MainView.swift in Sources */,
+				2B36B1D52B83ADDA001F911B /* TitleTextLabel.swift in Sources */,
 				2BE75FD52B7DFED3001859CA /* RealmModel.swift in Sources */,
 				2BF74A842B7CB29300B26149 /* AddImageViewController.swift in Sources */,
 				2BF74A8F2B7CCD0400B26149 /* AddTableViewCell.swift in Sources */,
 				2BF74A772B7CB1D500B26149 /* BaseViewController.swift in Sources */,
 				2BF74A9D2B7CEE7E00B26149 /* TagView.swift in Sources */,
+				2B36B1DB2B83AE01001F911B /* PriorityTextLabel.swift in Sources */,
+				2B36B1D72B83ADEC001F911B /* MemoLabel.swift in Sources */,
 				2BF74AAA2B7D37EE00B26149 /* BaseCollectionViewCell.swift in Sources */,
+				2B36B1D92B83ADF6001F911B /* DateTextLabel.swift in Sources */,
 				2BF74A812B7CB27100B26149 /* AddImageView.swift in Sources */,
 				2B36B1B72B80A45E001F911B /* AllListTableViewCell.swift in Sources */,
 				2BF74A702B7CB1B000B26149 /* MainViewController.swift in Sources */,
 				2BF74A912B7CCD2800B26149 /* BaseTableViewCell.swift in Sources */,
 				2BF74A952B7CEBE000B26149 /* UIViewController + Extension.swift in Sources */,
+				2B36B1C82B838770001F911B /* TodayViewController.swift in Sources */,
 				2B36B1C32B825281001F911B /* DetailViewController.swift in Sources */,
 				2B36B1BB2B825108001F911B /* DoneViewController.swift in Sources */,
 				2B36B1B52B80A450001F911B /* AllListView.swift in Sources */,
 				2BF74AA82B7D37E400B26149 /* MainCollectionViewCell.swift in Sources */,
 				2BF74A8A2B7CCC9D00B26149 /* Protocol.swift in Sources */,
+				2B36B1CE2B8387C4001F911B /* ScheduleViewController.swift in Sources */,
 				2BF74A992B7CEC3D00B26149 /* DateViewController.swift in Sources */,
 				2B36B1B02B8099CC001F911B /* ReminderRepository.swift in Sources */,
 				2BF74A9B2B7CEC4900B26149 /* DateView.swift in Sources */,

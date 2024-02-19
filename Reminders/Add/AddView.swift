@@ -16,6 +16,8 @@ class AddView: BaseView {
         view.backgroundColor = .clear
         return view
     }()
+    let imageView = UIImageView()
+
 
     override func configureHierarchy() {
         addSubview(tableView)
@@ -30,6 +32,5 @@ class AddView: BaseView {
     override func configureView() {
         super.configureView()
         backgroundColor = .systemGray6
-
     }
 }

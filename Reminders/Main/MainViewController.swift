@@ -32,9 +32,17 @@ class MainViewController: BaseViewController {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         realmList = repository.fetch()
-        doneList = repository.fetchDoneFilter(isDone: true)
+        doneList = repository.fetchDoneFilter()
          
         NotificationCenter.default.addObserver(self, selector: #selector(totalCountReceivedNotification), name: NSNotification.Name("TotalCountReceived"), object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        realmList = repository.fetch()
+        doneList = repository.fetchDoneFilter()
+        
+        mainView.collectionView.reloadData()
     }
     
     @objc func totalCountReceivedNotification(notification: NSNotification) {
@@ -46,7 +54,7 @@ class MainViewController: BaseViewController {
         }
         
         if notification.userInfo?["isDone"] is Results<RemindersTable> {
-            doneList = repository.fetchDoneFilter(isDone: true)
+            doneList = repository.fetchDoneFilter()
             
             print(#function, doneList?.count)
 
@@ -116,6 +124,14 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
+        case 0:
+            let vc = TodayViewController()
+            vc.navigationTitle = list[indexPath.item]
+            transition(style: .push, viewController: vc)
+        case 1:
+            let vc = ScheduleViewController()
+            vc.navigationTitle = list[indexPath.item]
+            transition(style: .push, viewController: vc)
         case 2:
             let vc = AllListViewController()
             vc.navigationTitle = list[indexPath.item]
