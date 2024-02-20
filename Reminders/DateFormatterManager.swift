@@ -7,7 +7,6 @@
 
 import Foundation
 
-// TODO: 싱글톰으로 학습해 보기
 class DateFormatterManager {
     static let shared = DateFormatterManager()
     

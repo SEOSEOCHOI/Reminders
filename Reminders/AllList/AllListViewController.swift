@@ -126,6 +126,13 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = AddViewController()
+        vc.navigationTitle = "세부사항"
+        vc.reminder = reamList[indexPath.row]
+        transition(style: .presentNavigation, viewController: vc)
+    }
+    
     @objc func doneButtonClicked(_ sender: UIButton) {
         repository.updateDone(reamList[sender.tag])
         mainView.tableView.reloadData()

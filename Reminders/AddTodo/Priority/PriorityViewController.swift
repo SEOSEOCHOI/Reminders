@@ -20,6 +20,9 @@ class PriorityViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.prioritySegment.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        if let selectedSegment = selectedSegment {
+            mainView.prioritySegment.selectedSegmentIndex = selectedSegment
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

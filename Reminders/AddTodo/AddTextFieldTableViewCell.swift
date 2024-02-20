@@ -26,12 +26,4 @@ class AddTextFieldTableViewCell: BaseTableViewCell {
         textView.font = .systemFont(ofSize: 15)
         textView.backgroundColor = .clear
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
 }

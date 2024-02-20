@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// TODO: 추후에 MemoLabl과 합치기
 class DateTextLabel: UILabel {
     
     override init(frame: CGRect) {

@@ -8,6 +8,20 @@
 import Foundation
 import RealmSwift
 
+class Folder: Object {
+    @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted var folderName: String
+    @Persisted var regDate: Date
+    
+    @Persisted var reminderList: List<RemindersTable>
+    
+    convenience init(folderName: String, regDate: Date) {
+        self.init()
+        self.folderName = folderName
+        self.regDate = regDate
+    }
+
+}
 class RemindersTable: Object {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var title: String // 제목
@@ -16,6 +30,7 @@ class RemindersTable: Object {
     @Persisted var tag: String // 태그
     @Persisted var priority: Int // 우선순위
     @Persisted var isDone: Bool
+    @Persisted(originProperty: "reminderList") var main: LinkingObjects<Folder>
     
     convenience init(title: String, memo: String? = nil, endDate: Date, tag: String, priority: Int, isDone: Bool) {
         self.init()
@@ -26,5 +41,6 @@ class RemindersTable: Object {
         self.priority = priority
         self.isDone = false
     }
+    // 추가 화면 UX: 오늘 날짜
 }
 

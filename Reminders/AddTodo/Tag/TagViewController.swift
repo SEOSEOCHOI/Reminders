@@ -11,16 +11,14 @@ class TagViewController: BaseViewController, UITextFieldDelegate {
     let mainView = TagView()
     
     var tagText: ((String) -> Void)?
-    
-    var money: ((String) -> Void)?
-
-    
+    var tagInput: String = ""
     override func loadView() {
         self.view = mainView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainView.tagTextField.text = tagInput
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -30,7 +28,7 @@ class TagViewController: BaseViewController, UITextFieldDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if let text = mainView.tagTextField.text {
-            money?(text)
+            tagText?(text)
         }
     }
 }

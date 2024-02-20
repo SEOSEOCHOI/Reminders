@@ -17,9 +17,16 @@ class MainView: BaseView {
         return view
     }()
     
+    let tableView: UITableView = {
+        let view = UITableView(frame: .zero, style: .insetGrouped)
+        view.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
+        return view
+    }()
+    
     override func configureHierarchy() {
         addSubview(label)
         addSubview(collectionView)
+        addSubview(tableView)
     }
     
     override func configureLayout() {
@@ -27,9 +34,14 @@ class MainView: BaseView {
             make.top.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(8)
         }
         collectionView.snp.makeConstraints { make in
-            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
-            
+            make.height.equalTo(safeAreaLayoutGuide).dividedBy(2)
             make.top.equalTo(label.snp.bottom).offset(8)
+            make.horizontalEdges.equalToSuperview()
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(8)
+            make.bottom.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
         }
     }
     
@@ -38,7 +50,6 @@ class MainView: BaseView {
         label.text = "전체"
         label.textColor = .lightGray
         label.font = .boldSystemFont(ofSize: 32)
-        
     }
 
     static func configureCollectionViewLayout() -> UICollectionViewLayout{

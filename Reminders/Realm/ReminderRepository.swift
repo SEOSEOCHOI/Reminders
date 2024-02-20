@@ -21,9 +21,23 @@ final class ReminderRepository {
             print(error)
         }
     }
+    func creatFolderRecord(_ item: Folder) {
+        do {
+            try realm.write {
+                realm.add(item)
+            }
+        } catch {
+            print(error)
+        }
+    }
     
     func fetch() -> Results<RemindersTable> { // 전체 램 가져오기
         return realm.objects(RemindersTable.self)
+    }
+    
+    // TODO: 제네릭으로 학습해 보기
+    func fetchFolder() -> Results<Folder> { // 전체 램 가져오기
+        return realm.objects(Folder.self)
     }
 
     func fetchEndDateFilter() -> Results<RemindersTable> { // 마감일 정렬
@@ -81,7 +95,7 @@ final class ReminderRepository {
             print(error)
         }
     }
-    
+    // update 하나의 메서드로 관리
     func updateTitle(_ item: RemindersTable, title: String) { // 제목 업데이트
         do {
             try realm.write {

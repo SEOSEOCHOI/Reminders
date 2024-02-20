@@ -11,6 +11,7 @@ class DateViewController: BaseViewController {
     let mainView = DateView()
     
     var delegate: PassDataDelegate?
+    var dateValue: String = ""
     
     override func loadView() {
         self.view = mainView
@@ -18,6 +19,7 @@ class DateViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.datePicker.addTarget(self, action: #selector(dateValueChange), for: .valueChanged)
+        mainView.dateTextField.text = dateValue
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -25,6 +27,7 @@ class DateViewController: BaseViewController {
     }
 
     @objc func dateValueChange(_ sender: UIDatePicker) {
-        mainView.dateTextField.text = mainView.changeDateFormat(date: sender.date)
+        dateValue = mainView.changeDateFormat(date: sender.date)
+        mainView.dateTextField.text = dateValue
     }
 }

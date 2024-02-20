@@ -20,21 +20,23 @@ class AddTableViewCell: BaseTableViewCell {
     
     override func configureConstraints() {
         label.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(contentView).inset(16)
+            make.leading.equalTo(contentView).inset(16)
             make.top.equalTo(contentView).inset(8)
+            make.trailing.equalTo(selectedImageView.snp.leading).offset(-8)
         }
         
         subTitleLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(contentView).inset(16)
+            make.leading.equalTo(contentView).inset(16)
             make.top.equalTo(label.snp.bottom).offset(4)
             make.bottom.equalTo(contentView).inset(8)
+            make.trailing.equalTo(selectedImageView.snp.leading).offset(-8)
             make.height.equalTo(20)
         }
         selectedImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalTo(8)
-            make.size.equalTo(100)
-            make.verticalEdges.equalTo(20)
+            make.trailing.equalTo(contentView.snp.trailing).inset(8)
+           make.size.equalTo(20)
+                //make.verticalEdges.equalTo(8)
         }
     }
     
@@ -46,17 +48,10 @@ class AddTableViewCell: BaseTableViewCell {
         subTitleLabel.textColor = .white
         subTitleLabel.font = .systemFont(ofSize: 13)
         
-        selectedImageView.backgroundColor = .systemPink
+        selectedImageView.clipsToBounds = true
         selectedImageView.contentMode = .scaleAspectFill
-        
+        self.accessoryType = .disclosureIndicator
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
 
 }

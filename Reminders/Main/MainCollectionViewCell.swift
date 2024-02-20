@@ -41,13 +41,31 @@ class MainCollectionViewCell: BaseCollectionViewCell {
             make.width.equalTo(statusImageView.snp.height)
         }
     }
-
-    override func setNeedsLayout() {
-        super.setNeedsLayout()
-        
-    }
+//
+//    override func setNeedsDisplay() {
+//        super.setNeedsDisplay()
+//        print(#function, statusImageView.frame.size)
+//
+//    }
+//    override func layoutIfNeeded() {
+//        super.layoutIfNeeded()
+//        print(#function, statusImageView.frame.size)
+//    }
+//    override func setNeedsLayout() {
+//        super.setNeedsLayout()
+//        print(#function, statusImageView.frame.size)
+////        statusImageView.layer.cornerRadius = statusImageView.frame.height / 2
+////        super.setNeedsLayout()
+//    }
+//    override func setNeedsUpdateConstraints() {
+//        super.setNeedsUpdateConstraints()
+//        print(#function, statusImageView.frame.size)
+//
+//    }
+    
     
     override func configureView() {
+        print(#function, statusImageView.frame.size)
         statusLabel.textColor = .lightGray
         statusLabel.font = .boldSystemFont(ofSize: 15)
         
@@ -79,9 +97,5 @@ class MainCollectionViewCell: BaseCollectionViewCell {
             print(3)
         statusImageView.contentMode = .center
         statusImageView.clipsToBounds = true
-
-        
-        let config = UIImage.SymbolConfiguration(scale: .large)
-        statusImageView.preferredSymbolConfiguration = config
     }
 }
