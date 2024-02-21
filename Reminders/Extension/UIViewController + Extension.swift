@@ -39,7 +39,7 @@ extension UIViewController {
             return UIImage(contentsOfFile: fileURL.path())
 
         } else {
-            return UIImage(systemName: "star.fill")
+            return nil
         }
     }
     func saveImageToDocument(image: UIImage, fileName: String) {

@@ -13,6 +13,7 @@ class AddListViewController: BaseViewController {
     
     var folderName: String = ""
     var regDate = Date()
+    var folder: ((Folder) -> Void)?
     
     let repository = ReminderRepository()
     let realm = try! Realm()
@@ -66,7 +67,7 @@ class AddListViewController: BaseViewController {
         print(regDate)
         
         let data = Folder(folderName: folderName, regDate: regDate)
-        repository.creatFolderRecord(data)
+        folder?(data)
         dismiss(animated: true)
     }
 }

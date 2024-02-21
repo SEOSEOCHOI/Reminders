@@ -16,6 +16,7 @@ final class ReminderRepository {
         do {
             try realm.write {
                 realm.add(item)
+               
             }
         } catch {
             print(error)
@@ -25,6 +26,15 @@ final class ReminderRepository {
         do {
             try realm.write {
                 realm.add(item)
+            }
+        } catch {
+            print(error)
+        }
+    }    
+    func appendRecord(_ item: RemindersTable, _ folder: Folder) {
+        do {
+            try realm.write {
+            folder.reminderList.append(item)
             }
         } catch {
             print(error)
@@ -86,6 +96,34 @@ final class ReminderRepository {
         }
     }
     
+    // update 하나의 메서드로 관리
+    func updateRecord(id: ObjectId, _ item: RemindersTable) {
+        do {
+            try realm.write {
+                realm.create(RemindersTable.self,
+                             value: ["id":id,
+                                     "title":item.title,
+                                     "memo":item.memo,
+                                     "endDate":item.endDate,
+                                     "tag":item.tag,
+                                     "priority":item.priority],
+                             update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateFolder(id: ObjectId, _ item: Folder) {
+        do {
+            try realm.create(Folder.self,
+                             value: ["id":item.id],
+                             update: .modified)
+        } catch {
+            print("error")
+        }
+    }
+    
     func updateDone(_ item: RemindersTable) { // 완료 업데이트
         do {
             try realm.write {
@@ -95,55 +133,4 @@ final class ReminderRepository {
             print(error)
         }
     }
-    // update 하나의 메서드로 관리
-    func updateTitle(_ item: RemindersTable, title: String) { // 제목 업데이트
-        do {
-            try realm.write {
-                item.title = title
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
-    func updateDone(_ item: RemindersTable, memo: String) { // 메모 업데이트
-        do {
-            try realm.write {
-                item.memo = memo
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
-    func updateDone(_ item: RemindersTable, endDate: Date) { // 마감일 업데이트
-        do {
-            try realm.write {
-                item.endDate = endDate
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
-    func updateDone(_ item: RemindersTable, tag: String) { // 태그 업데이트
-        do {
-            try realm.write {
-                item.tag = tag
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
-    func updateDone(_ item: RemindersTable, priority: Int) { // 우선순위 업데이트
-        do {
-            try realm.write {
-                item.priority = priority
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
 }

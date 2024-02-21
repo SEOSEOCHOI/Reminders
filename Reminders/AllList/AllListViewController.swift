@@ -95,6 +95,8 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.endDateLabel.text = dateString
         if let memoText = data.memo {
             cell.memoLabel.text = memoText
+        } else {
+            cell.memoLabel.text = ""
         }
         cell.priorityImageView.text = priorityImage
         
@@ -103,7 +105,10 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.tagLabel.text = "#\(data.tag)"
         
         if let image = loadImageToDocument(fileName: "\(data.id)") {// PK
+            cell.savedImageView.isHidden = false
             cell.savedImageView.image = image
+        } else {
+            cell.savedImageView.isHidden = true
         }
         
         return cell
@@ -130,16 +135,15 @@ extension AllListViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = AddViewController()
         vc.navigationTitle = "세부사항"
         vc.reminder = reamList[indexPath.row]
+        vc.changeData = {
+            self.mainView.tableView.reloadData()
+        }
         transition(style: .presentNavigation, viewController: vc)
     }
     
     @objc func doneButtonClicked(_ sender: UIButton) {
         repository.updateDone(reamList[sender.tag])
         mainView.tableView.reloadData()
-        
-        NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
-                                        object: nil,
-                                        userInfo: ["isDone":repository.fetchDoneFilter()])
     }
 }
 

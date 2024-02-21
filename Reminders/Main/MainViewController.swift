@@ -66,10 +66,20 @@ class MainViewController: BaseViewController {
     let mainView = MainView()
     
     let list = ReminderList.allCases
-    let repository = ReminderRepository()
-    // 한번만 가져온 뒤 필터링
-    var folderList: Results<Folder>!
-    var realmList: Results<RemindersTable>!
+    let repository = ReminderRepository() 
+    
+    var folderList: Results<Folder>! {
+        didSet {
+            print("didset")
+            mainView.tableView.reloadData()
+        }
+    }
+    var realmList: Results<RemindersTable>! {
+        didSet {
+            mainView.tableView.reloadData()
+        }
+    }
+    
     let realm = try! Realm()
 
     
@@ -79,46 +89,15 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureToolBar()
+        realmList = repository.fetch()
+        folderList = repository.fetchFolder()
         
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
-        
-        realmList = repository.fetch()
-        folderList = repository.fetchFolder()
-        //doneList = repository.fetchDoneFilter()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(totalCountReceivedNotification), name: NSNotification.Name("TotalCountReceived"), object: nil)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        realmList = repository.fetch()
-        //doneList = repository.fetchDoneFilter()
-        // 데이터 변경 시점에만 reloadData
-        mainView.collectionView.reloadData()
-        mainView.tableView.reloadData()
-    }
-    
-    @objc func totalCountReceivedNotification(notification: NSNotification) {
-        if notification.userInfo?["reminders"] is Results<RemindersTable> {
-            realmList = repository.fetch()
-            print(#function, realmList?.count)
-
-            mainView.collectionView.reloadData()
-        }
-        
-        if notification.userInfo?["isDone"] is Results<RemindersTable> {
-            //doneList = repository.fetchDoneFilter()
-            
-           // print(#function, doneList?.count)
-
-            mainView.collectionView.reloadData()
-        }
-    }
-    
     
     func configureToolBar() {
         self.navigationController?.isToolbarHidden = false
@@ -141,17 +120,21 @@ class MainViewController: BaseViewController {
         print(#function)
         let vc = AddViewController()
         vc.navigationTitle = "새로운 미리알림"
-
+        vc.delegate = self
         transition(style: .presentNavigation, viewController: vc)
     }
     
     @objc func addListButtonClicked() {
         print(#function)
         let vc = AddListViewController()
-        transition(style: .presentNavigation, viewController: vc)
         
+        vc.folder = { value in
+            self.repository.creatFolderRecord(value)
+            self.mainView.tableView.reloadData()
+        }
+        
+        transition(style: .presentNavigation, viewController: vc)
     }
-    
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -163,19 +146,52 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.identifier, for: indexPath) as! MainCollectionViewCell
         
         let item = list[indexPath.item]
+        
+        switch indexPath.item {
+        case 0:
+            let start = Calendar.current.startOfDay(for: Date())
+            
+            // 내일 시작 날짜
+            let end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date() // start 기준 + 1 <- 항상 다음날!
+            
+            // 쿼리 작성
+            let TodayPredicate = NSPredicate(format: "endDate >= %@ && endDate < %@", start as NSDate, end as NSDate)
+            
+            realmList = repository.fetch().filter(TodayPredicate)
+            cell.countLabel.text = "\(realmList.count)"
+        case 1:
+            realmList = repository.fetch()
+            let start = Calendar.current.startOfDay(for: Date())
+            // compactMap: Returns the non-nil results of mapping the given transformation over this sequence.
+            let highestDate = realmList.compactMap {
+                $0.endDate
+            }.max()
+            
+            let end = highestDate
 
-        if indexPath.item == 2 {
-                cell.countLabel.text = "\(realmList.count)"
-        } else if indexPath.item == 4 {
-            //cell.countLabel.text = "\(doneList.count)"
-        } else {
+            let schedulePredicate = NSPredicate(format: "endDate >= %@ && endDate <= %@", start as NSDate, end! as NSDate)
+            
+            realmList = repository.fetch().filter(schedulePredicate)
+                        
+            cell.countLabel.text = "\(realmList.count)"
+        case 2:
+            realmList = repository.fetch()
+            cell.countLabel.text = "\(realmList.count)"
+        case 3:
             cell.countLabel.text = "0"
+        case 4:
+            realmList = repository.fetchDoneFilter()
+            cell.countLabel.text = "\(realmList.count)"
+        default: break
         }
+        
         cell.statusLabel.text = item.todoList
         
         cell.statusImageView.backgroundColor = item.colorList
         cell.statusImageView.image = UIImage(systemName: item.imageList)
-
+        DispatchQueue.main.async {
+            cell.statusImageView.layer.cornerRadius = cell.statusImageView.frame.height / 2
+        }
         cell.backgroundColor = .darkGray
         cell.layer.cornerRadius = 12
 
@@ -216,7 +232,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as! MainTableViewCell
         let row = indexPath.row
         let data = folderList[row]
-        
         cell.todoImageView.image = UIImage(systemName: "star")
         cell.titleLabel.text = data.folderName
         cell.countLabel.text = "\(data.reminderList.count)"
@@ -230,4 +245,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return "목록"
     }
     
+}
+extension MainViewController: PassDataDelegate {
+    func priorityReceived(selectIndex: Int) {
+        
+    }
+    
+    func dateReceived(text: String) {
+        
+    }
+    
+    func ReminderReceived(data: RemindersTable, folder: Folder) {
+        repository.creatRecord(data)
+        repository.appendRecord(data, folder)
+         
+        mainView.tableView.reloadData()
+        mainView.collectionView.reloadData()
+    }
+
 }

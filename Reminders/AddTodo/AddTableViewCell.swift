@@ -35,7 +35,7 @@ class AddTableViewCell: BaseTableViewCell {
         selectedImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalTo(contentView.snp.trailing).inset(8)
-           make.size.equalTo(20)
+            make.size.equalTo(20)
                 //make.verticalEdges.equalTo(8)
         }
     }

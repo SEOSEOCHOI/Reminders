@@ -11,6 +11,7 @@ import RealmSwift
 protocol PassDataDelegate {
     func priorityReceived(selectIndex: Int)
     func dateReceived(text: String)
+    func ReminderReceived(data: RemindersTable, folder: Folder)
 }
 
 class AddViewController: BaseViewController {
@@ -30,15 +31,17 @@ class AddViewController: BaseViewController {
             navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
         }
     }
-    let placeholderText = ["제목", "메모"]
+    let placeholderText = ["제목", "메모"]    
+    let priorityList = Priority.allCases
+
+    var delegate: PassDataDelegate?
+    var changeData: (() -> Void)?
     
     let repository = ReminderRepository()
     let realm = try! Realm()
     var folder: Folder!
     var list: Results<RemindersTable>!
     var reminder: RemindersTable!
-    
-
     
     var titleString: String = "" {
         didSet {
@@ -51,7 +54,8 @@ class AddViewController: BaseViewController {
     var priorty: Int?
     var isDone:Bool = false
     var selectedImage: UIImage?
-    var folderText: String = ""
+    var folderName: String = ""
+    var changeFolderName: String = ""
     
     
     override func viewDidLoad() {
@@ -60,27 +64,47 @@ class AddViewController: BaseViewController {
         
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
-        //print(#function,realm.configuration.fileURL)
+        print(#function,realm.configuration.fileURL)
         list = repository.fetch()
-        
     }
-    override func viewWillAppear(_ animated: Bool) {
-        navigationItem.rightBarButtonItem?.isEnabled = isAddButtonEnable()
+    override func configureView() {
+        if let reminder = reminder {
+            titleString = reminder.title
+            memo = reminder.memo
+            endDate = reminder.endDate
+            tag = reminder.tag
+            priorty = reminder.priority
+            isDone = reminder.isDone
+            selectedImage = loadImageToDocument(fileName: "\(reminder.id)")
+            folder = reminder.main.first.unsafelyUnwrapped
+            folderName = reminder.main.first?.folderName ?? ""
+            
+            print(folderName)
+            print(reminder)
+            print(folder)
+            
+            let date = DateFormatterManager.shared.DateToString(from: endDate)
+            
+            subTitleList = [date,
+                            tag,
+                            priorityList[priorty ?? 0].priorityTitle,
+                            "dummy",
+                            folderName]
+        }
     }
 }
 
 extension AddViewController {
     func configureNavigation() {
-
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonClicked))
-        let doneButton = UIBarButtonItem(title: "수정", style: .plain, target: self, action: #selector(doneButtonClicked))
+        let fixButton = UIBarButtonItem(title: "수정", style: .plain, target: self, action: #selector(fixButtonClicked))
         let addButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addButtonClicked))
         navigationItem.title = navigationTitle
         
         navigationItem.leftBarButtonItem = cancelButton
         
-        if let reminder = reminder {
-            navigationItem.rightBarButtonItem = doneButton
+        if reminder != nil {
+            navigationItem.rightBarButtonItem = fixButton
         } else {
             navigationItem.rightBarButtonItem = addButton
         }
@@ -93,41 +117,41 @@ extension AddViewController {
     
     @objc func addButtonClicked() {
         let data = RemindersTable(title: titleString, memo: memo, endDate: endDate, tag: tag, priority: priorty!, isDone: isDone)
-        repository.creatRecord(data)
-        
-        NotificationCenter.default.post(name: NSNotification.Name("TotalCountReceived"),
-                                        object: nil,
-                                        userInfo: ["reminders":repository.fetch(),
-                                                   "isDone":repository.fetchDoneFilter()])
-        
+
         if let customCell = mainView.tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as? AddTableViewCell {
             if let image = customCell.selectedImageView.image {
                 saveImageToDocument(image: image, fileName: "\(data.id)")
             }
         }
         
-        do {
-            try realm.write {
-                // 1. DetailToDo에 바로 하위 항목 추가
-                // realm.add(data)
-                
-                // 2. List를 통해 DetailToDo에 하위 항목 추가
-                folder.reminderList.append(data)
-            }
-        } catch {
-            print(error)
-        }       
+        delegate?.ReminderReceived(data: data, folder: folder)    
         
         dismiss(animated: true)
     }
     
-    @objc func doneButtonClicked() {
+    @objc func fixButtonClicked() {
+        print(titleString)
         let data = RemindersTable(title: titleString, memo: memo, endDate: endDate, tag: tag, priority: priorty!, isDone: isDone)
-        // TODO: 기능 구현
+        
+        if let customCell = mainView.tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as? AddTableViewCell {
+            if let image = customCell.selectedImageView.image {
+                saveImageToDocument(image: image, fileName: "\(data.id)")
+            }
+        }
+
+        repository.updateRecord(id: reminder.id, data)
+
+        if folderName != changeFolderName {
+            print("change", folderName, changeFolderName)
+            repository.appendRecord(data, folder)
+        }
+
+        changeData?()
         dismiss(animated: true)
     }
     
     func isAddButtonEnable() -> Bool {
+        print(subTitleList)
         if titleString == "" {
             return false
         }
@@ -136,7 +160,6 @@ extension AddViewController {
                 return false
             }
         }
-        
         return true
     }
 }
@@ -156,53 +179,7 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // TODO: 상세화면과 재사용 코드 개선
-        if let reminder = reminder {
-            switch indexPath.section {
-            case 0:
-                let cell = tableView.dequeueReusableCell(withIdentifier: AddTextFieldTableViewCell.identifier, for: indexPath) as! AddTextFieldTableViewCell
-                    let inputString: [String?] = [titleString, memo]
-                    let reminderString: [String?] = [reminder.title, reminder.memo]
-                    
-                    cell.textView.delegate = self
-                    cell.textView.tag = indexPath.row
-                    
-                    if let inputText = inputString[indexPath.row] { // 제목
-                        if inputText != "" { // 제목이 빈 문자열이 아닐 때
-                            cell.textView.text = inputText
-                            cell.textView.textColor = .white
-                        } else { // 빈 문자열일 때
-                            cell.textView.textColor = .lightGray
-                            cell.textView.text = placeholderText[indexPath.row]
-                        }
-                    } else { // 메모
-                        if inputString[indexPath.row] != nil && inputString[indexPath.row] != "" {
-                            cell.textView.textColor = .white
-                            cell.textView.text = inputString[indexPath.row]
-                        } else {
-                            cell.textView.textColor = .lightGray
-                            cell.textView.text = placeholderText[indexPath.row]
-                        }
-                    }
-                return cell
-            default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: AddTableViewCell.identifier, for: indexPath) as! AddTableViewCell
-                
-                if indexPath.section != 4 {
-                    cell.subTitleLabel.text = subTitleList[indexPath.section - 1]
-                    cell.selectedImageView.isHidden = true
-                } else {
-                    if let selectedImage = selectedImage {
-                        cell.selectedImageView.isHidden = false
-                        cell.selectedImageView.image = selectedImage
-                        
-                    }
-                }
-                
-                cell.label.text = sectionTitleList[indexPath.section - 1]
-                cell.accessoryType = .disclosureIndicator
-                return cell
-            }
-        } else {
+        
             switch indexPath.section {
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: AddTextFieldTableViewCell.identifier, for: indexPath) as! AddTextFieldTableViewCell
@@ -240,17 +217,15 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
                     if let selectedImage = selectedImage {
                         cell.selectedImageView.isHidden = false
                         cell.selectedImageView.image = selectedImage
-                        
+                    } else {
+                        cell.selectedImageView.isHidden = true
                     }
                 }
-                
 
-                
                 cell.label.text = sectionTitleList[indexPath.section - 1]
                 cell.accessoryType = .disclosureIndicator
                 return cell
             }
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -295,11 +270,10 @@ extension AddViewController: UITableViewDelegate, UITableViewDataSource {
                 let vc = SelectListViewController()
                 vc.folderData = { value in
                     self.folder = value
-                    self.subTitleList[4] = value.folderName
+                    self.changeFolderName = self.folder.folderName
+                    self.subTitleList[4] = self.changeFolderName
                     
-                    cell.subTitleLabel.text = self.subTitleList[4]
-                    self.folderText = self.subTitleList[4]
-                    print(value)
+                    cell.subTitleLabel.text = self.changeFolderName
                 }
                 transition(style: .push, viewController: vc)
             }
@@ -329,6 +303,13 @@ extension AddViewController: UITextViewDelegate {
                 textView.text = placeholderText[1]
             }
             textView.textColor = .lightGray
+        } else {
+            if textView.tag == 0 {
+                titleString = textView.text
+            } else {
+                memo = textView.text
+            }
+            
         }
     }
     
@@ -364,6 +345,11 @@ extension AddViewController: UITextViewDelegate {
 }
 
 extension AddViewController: PassDataDelegate {
+    func ReminderReceived(data: RemindersTable, folder: Folder) {
+        
+    }
+
+    
     func priorityReceived(selectIndex: Int) {
         let priotyList = Priority.allCases
         priorty = selectIndex
@@ -377,7 +363,6 @@ extension AddViewController: PassDataDelegate {
         if let date = DateFormatterManager.shared.StringToDate(text: text) {
             endDate = date
         }
-        
         subTitleList[0] = text
         mainView.tableView.reloadData()
     }
@@ -385,7 +370,6 @@ extension AddViewController: PassDataDelegate {
 
 extension AddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print(#function)
         dismiss(animated: true)
     }
     
@@ -393,8 +377,7 @@ extension AddViewController: UIImagePickerControllerDelegate, UINavigationContro
         print(#function)
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             selectedImage = pickedImage
-            print(selectedImage)
-            //mainView.tableView.reloadData()
+            mainView.tableView.reloadData()
         }
         dismiss(animated: true)
         

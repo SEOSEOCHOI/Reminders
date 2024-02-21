@@ -11,7 +11,8 @@ import SnapKit
 class MainView: BaseView {
     let label = UILabel()
     let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
+        let view = UICollectionView(frame: .zero, collectionViewLayout: MainView.configureCollectionViewLayout())
+        
         view.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.identifier)
         
         return view
@@ -54,10 +55,10 @@ class MainView: BaseView {
 
     static func configureCollectionViewLayout() -> UICollectionViewLayout{
         let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 8
+        let spacing: CGFloat = 18
         let cellWidth = UIScreen.main.bounds.width - (spacing * 3)
         
-        layout.itemSize = CGSize(width: cellWidth / 2, height: cellWidth / 4)
+        layout.itemSize = CGSize(width: cellWidth / 2, height: cellWidth / 3)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.sectionInset = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
