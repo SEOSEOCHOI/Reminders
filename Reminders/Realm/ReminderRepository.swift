@@ -16,12 +16,12 @@ final class ReminderRepository {
         do {
             try realm.write {
                 realm.add(item)
-               
             }
         } catch {
             print(error)
         }
     }
+    
     func creatFolderRecord(_ item: Folder) {
         do {
             try realm.write {
@@ -31,6 +31,7 @@ final class ReminderRepository {
             print(error)
         }
     }    
+    
     func appendRecord(_ item: RemindersTable, _ folder: Folder) {
         do {
             try realm.write {
@@ -116,9 +117,11 @@ final class ReminderRepository {
     
     func updateFolder(id: ObjectId, _ item: Folder) {
         do {
-            try realm.create(Folder.self,
+            try realm.write {
+                realm.create(Folder.self,
                              value: ["id":item.id],
-                             update: .modified)
+                       update: .modified)
+            }
         } catch {
             print("error")
         }

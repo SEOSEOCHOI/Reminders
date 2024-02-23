@@ -12,7 +12,6 @@ class MainCollectionViewCell: BaseCollectionViewCell {
     let statusLabel = UILabel()
     let countLabel = UILabel()
     var statusImageView = UIImageView()
-    
     // statusImageView는MainCollectionViewCell이 초기화되ㅏㄹ때만들어딤
     // 셀이초기화될떄 크기를 모름
     
@@ -24,7 +23,7 @@ class MainCollectionViewCell: BaseCollectionViewCell {
     
     override func configureConstraints() {
         statusImageView.snp.makeConstraints { make in
-            make.height.equalToSuperview().dividedBy(3)
+            make.height.equalToSuperview().multipliedBy(0.4)
             make.width.equalTo(statusImageView.snp.height)
             make.top.leading.equalToSuperview().inset(10)
             print("1",statusImageView.frame.size)
@@ -52,10 +51,8 @@ class MainCollectionViewCell: BaseCollectionViewCell {
         countLabel.font = .boldSystemFont(ofSize: 32)
         countLabel.textAlignment = .right
         
-        statusImageView.tintColor = .white
-        statusImageView.clipsToBounds = true
-        statusImageView.contentMode = .scaleAspectFill
-                /*
+        //statusImageView.tintColor = .white
+        /*
          Constraints -> Layout -> Draw
          
          Constraints: configurelayout NSConstraints

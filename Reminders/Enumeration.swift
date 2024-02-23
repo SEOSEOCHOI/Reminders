@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 enum Priority: Int, CaseIterable {
     case top
     case middle
@@ -33,6 +34,59 @@ enum Priority: Int, CaseIterable {
         case .low:
             return "!"
             //return "exclamationmark"        }
+        }
+    }
+}
+
+enum ReminderList: String, CaseIterable {
+    case today
+    case schedule
+    case total
+    case flag
+    case done
+    
+    var todoList: String {
+        switch self {
+        case .today:
+            return "오늘"
+        case .schedule:
+            return "예정"
+        case .total:
+            return "전체"
+        case .flag:
+            return "깃발 표시"
+        case .done:
+            return "완료됨"
+        }
+    }
+    
+    var imageList: String {
+        switch self {
+        case .today:
+            "calendar.circle.fill"
+        case .schedule:
+            "calendar.circle.fill"
+        case .total:
+            "pencil.circle.fill"
+        case .flag:
+            "flag.circle.fill"
+        case .done:
+            "checkmark.circle.fill"
+        }
+    }
+    
+    var colorList: UIColor {
+        switch self {
+        case .today:
+            return .blue
+        case .schedule:
+            return .red
+        case .total:
+            return .gray
+        case .flag:
+            return .yellow
+        case .done:
+            return .gray
         }
     }
 }

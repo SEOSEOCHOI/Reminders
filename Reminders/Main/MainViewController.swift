@@ -8,60 +8,6 @@
 import UIKit
 import RealmSwift
 
-enum ReminderList: String, CaseIterable {
-    case today
-    case schedule
-    case total
-    case flag
-    case done
-    
-    var todoList: String {
-        switch self {
-        case .today:
-            return "오늘"
-        case .schedule:
-            return "예정"
-        case .total:
-            return "전체"
-        case .flag:
-            return "깃발 표시"
-        case .done:
-            return "완료됨"
-        }
-    }
-    
-    var imageList: String {
-        switch self {
-        case .today:
-            "calendar"
-        case .schedule:
-            "calendar"
-        case .total:
-            "pencil"
-        case .flag:
-            "flag.fill"
-        case .done:
-            "checkmark"
-        }
-    }
-    
-    var colorList: UIColor {
-        switch self {
-        case .today:
-            return .blue
-        case .schedule:
-            return .red
-        case .total:
-            return .gray
-        case .flag:
-            return .yellow
-        case .done:
-            return .gray
-        }
-    }
-    
-}
-
 class MainViewController: BaseViewController {
     let mainView = MainView()
     
@@ -187,7 +133,12 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         
         cell.statusLabel.text = item.todoList
         
-        cell.statusImageView.backgroundColor = item.colorList
+        cell.statusImageView.tintColor = item.colorList
+        cell.statusImageView.backgroundColor = .white
+        //cell.statusImageView.layer.borderWidth = 5
+        cell.statusImageView.layer.borderColor = item.colorList.cgColor
+        // symbolConfiguration
+
         cell.statusImageView.image = UIImage(systemName: item.imageList)
         DispatchQueue.main.async {
             cell.statusImageView.layer.cornerRadius = cell.statusImageView.frame.height / 2

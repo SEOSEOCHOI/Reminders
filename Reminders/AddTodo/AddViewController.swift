@@ -79,10 +79,6 @@ class AddViewController: BaseViewController {
             folder = reminder.main.first.unsafelyUnwrapped
             folderName = reminder.main.first?.folderName ?? ""
             
-            print(folderName)
-            print(reminder)
-            print(folder)
-            
             let date = DateFormatterManager.shared.DateToString(from: endDate)
             
             subTitleList = [date,
@@ -143,7 +139,7 @@ extension AddViewController {
 
         if folderName != changeFolderName {
             print("change", folderName, changeFolderName)
-            repository.appendRecord(data, folder)
+//            repository.updateFolder(id: reminder.main.first.id, fo)
         }
 
         changeData?()
